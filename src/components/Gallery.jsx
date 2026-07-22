@@ -19,7 +19,7 @@ export default function Gallery() {
     setActiveSlide((prev) => (prev + 1) % galleryImages.length);
   }, []);
 
-  // Automatic Carousel Play loop
+  // Automatic Carousel Play loop every 3 seconds
   useEffect(() => {
     const interval = setInterval(nextSlide, 3000);
     return () => clearInterval(interval);
@@ -59,7 +59,7 @@ export default function Gallery() {
     }
   }, [selectedIndex, closeLightbox, showNextLightbox, showPrevLightbox]);
 
-  // Helper to get 3 visible cards
+  // Helper to get 3 visible cards for centered horizontal carousel
   const getVisibleCards = () => {
     const total = galleryImages.length;
     const prev = (activeSlide - 1 + total) % total;
@@ -72,17 +72,17 @@ export default function Gallery() {
   };
 
   return (
-    <section id="gallery" className="py-20 px-4 sm:px-8 max-w-7xl mx-auto relative overflow-hidden bg-[#FAF7F2]">
+    <section id="gallery" className="py-16 px-4 sm:px-8 max-w-6xl mx-auto relative overflow-hidden bg-[#FAF7F2]">
       <div className="text-center max-w-xl mx-auto mb-8 relative z-10">
         <p className="text-rose-500 tracking-[0.2em] uppercase text-xs font-semibold mb-2">Our Moments</p>
         <h2 className="font-serif text-3xl sm:text-4xl text-neutral-800 tracking-tight">Photo Gallery</h2>
         <div className="w-12 h-0.5 bg-rose-300 mx-auto mt-4"></div>
       </div>
 
-      {/* Pure Automatic Carousel (No Navigation Buttons) */}
-      <div className="relative max-w-5xl mx-auto py-4">
-        {/* 3-Card Carousel Track */}
-        <div className="flex items-center justify-center gap-4 sm:gap-8 min-h-[380px] sm:min-h-[460px]">
+      {/* Pure Automatic Centered Row Carousel */}
+      <div className="w-full max-w-4xl mx-auto py-2">
+        {/* Horizontal Card Track */}
+        <div className="gallery-carousel-track">
           {getVisibleCards().map(({ index, position }) => {
             const img = galleryImages[index];
             const isCenter = position === 'center';
@@ -91,9 +91,9 @@ export default function Gallery() {
               <div
                 key={`${img.id}-${position}`}
                 onClick={() => isCenter ? openLightbox(index) : setActiveSlide(index)}
-                className={`gallery-card-item glass-card shadow-xl transition-all duration-700 ease-in-out cursor-pointer ${
+                className={`gallery-card-item glass-card shadow-xl transition-all duration-700 ease-in-out ${
                   isCenter
-                    ? 'z-20 scale-105 ring-4 ring-rose-300 shadow-2xl'
+                    ? 'z-20 scale-105 ring-4 ring-rose-300 shadow-2xl opacity-100'
                     : 'hidden sm:block opacity-60 scale-90 hover:opacity-90'
                 }`}
               >

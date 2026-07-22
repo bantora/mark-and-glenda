@@ -78,24 +78,40 @@ h1, h2, h3, h4, .font-serif {
   scrollbar-width: none;
 }
 
+.gallery-carousel-track {
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 24px !important;
+  width: 100% !important;
+  max-width: 1000px !important;
+  margin: 0 auto !important;
+}
+
 .gallery-card-item {
-  width: 280px !important;
-  max-width: 280px !important;
-  height: 420px !important;
-  max-height: 420px !important;
-  flex-shrink: 0 !important;
-  position: relative !important;
-  overflow: hidden !important;
+  width: 240px !important;
+  min-width: 240px !important;
+  max-width: 240px !important;
+  height: 360px !important;
+  min-height: 360px !important;
+  max-height: 360px !important;
   border-radius: 16px !important;
+  overflow: hidden !important;
+  position: relative !important;
+  margin: 0 !important;
   cursor: pointer !important;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1) !important;
 }
 
 @media (max-width: 640px) {
   .gallery-card-item {
-    width: 220px !important;
-    max-width: 220px !important;
-    height: 330px !important;
-    max-height: 330px !important;
+    width: 200px !important;
+    min-width: 200px !important;
+    max-width: 200px !important;
+    height: 300px !important;
+    min-height: 300px !important;
+    max-height: 300px !important;
   }
 }
 
