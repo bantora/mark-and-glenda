@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { X, ChevronLeft, ChevronRight, Maximize2, Pause, Play } from 'lucide-react';
 
 const galleryImages = [
@@ -14,21 +14,37 @@ const galleryImages = [
 export default function Gallery() {
   const [selectedIndex, setSelectedIndex] = useState(null);
   const [isPlaying, setIsPlaying] = useState(true);
-  const [currentIndex, setCurrentIndex] = useState(0);
+  const scrollContainerRef = useRef(null);
 
-  const showNextSlide = useCallback(() => {
-    setCurrentIndex((prev) => (prev + 1) % galleryImages.length);
-  }, []);
-
-  const showPrevSlide = useCallback(() => {
-    setCurrentIndex((prev) => (prev - 1 + galleryImages.length) % galleryImages.length);
-  }, []);
-
+  // Auto-scroll loop moving right-to-left continuously
   useEffect(() => {
     if (!isPlaying) return;
-    const interval = setInterval(showNextSlide, 3500);
+    const interval = setInterval(() => {
+      if (scrollContainerRef.current) {
+        const { scrollLeft, scrollWidth, clientWidth } = scrollContainerRef.current;
+        if (scrollLeft + clientWidth >= scrollWidth - 10) {
+          scrollContainerRef.current.scrollTo({ left: 0, behavior: 'smooth' });
+        } else {
+          scrollContainerRef.current.scrollBy({ left: 280, behavior: 'smooth' });
+        }
+      }
+    }, 3200);
     return () => clearInterval(interval);
-  }, [isPlaying, showNextSlide]);
+  }, [isPlaying]);
+
+  const scrollLeftNav = () => {
+    setIsPlaying(false);
+    if (scrollContainerRef.current) {
+      scrollContainerRef.current.scrollBy({ left: -320, behavior: 'smooth' });
+    }
+  };
+
+  const scrollRightNav = () => {
+    setIsPlaying(false);
+    if (scrollContainerRef.current) {
+      scrollContainerRef.current.scrollBy({ left: 320, behavior: 'smooth' });
+    }
+  };
 
   const openLightbox = (index) => {
     setSelectedIndex(index);
@@ -65,94 +81,89 @@ export default function Gallery() {
   }, [selectedIndex, closeLightbox, showNextLightbox, showPrevLightbox]);
 
   return (
-    <section id="gallery" className="py-16 px-4 sm:px-6 max-w-5xl mx-auto overflow-hidden">
-      <div className="text-center max-w-xl mx-auto mb-8">
-        <p className="text-rose-500 tracking-widest uppercase text-xs font-semibold mb-2">Our Moments</p>
-        <h2 className="font-serif text-3xl sm:text-4xl text-neutral-800">Photo Gallery</h2>
+    <section id="gallery" className="py-20 px-4 sm:px-8 max-w-7xl mx-auto relative overflow-hidden bg-[#FAF7F2]">
+      {/* Background Decorative Botanical Flourish Accent */}
+      <div className="absolute top-0 right-0 w-64 h-64 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-rose-100/40 via-transparent to-transparent pointer-events-none"></div>
+
+      <div className="text-center max-w-xl mx-auto mb-10 relative z-10">
+        <p className="text-rose-500 tracking-[0.2em] uppercase text-xs font-semibold mb-2">Our Moments</p>
+        <h2 className="font-serif text-3xl sm:text-4xl text-neutral-800 tracking-tight">Photo Gallery</h2>
         <div className="w-12 h-0.5 bg-rose-300 mx-auto mt-4"></div>
       </div>
 
-      {/* Featured Photo Display with Strict Max-Width & Max-Height */}
-      <div className="relative max-w-2xl mx-auto group">
-        <div className="relative h-[250px] sm:h-[360px] max-w-[640px] max-h-[360px] mx-auto rounded-2xl overflow-hidden glass-card shadow-xl bg-neutral-900 flex items-center justify-center">
-          <img
-            src={galleryImages[currentIndex].url}
-            alt={galleryImages[currentIndex].title}
-            style={{ maxWidth: '100%', maxHeight: '100%' }}
-            className="w-auto h-auto object-contain transition-all duration-500 ease-out"
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent flex items-end p-4 sm:p-5 pointer-events-none">
-            <div className="text-white flex justify-between items-end w-full pointer-events-auto">
-              <div>
-                <p className="text-rose-300 text-[11px] uppercase tracking-widest font-semibold">Mark & Glenda</p>
-                <p className="font-serif text-base sm:text-lg font-light">Photo {currentIndex + 1} of {galleryImages.length}</p>
-              </div>
-              <button
-                onClick={() => openLightbox(currentIndex)}
-                className="px-3 py-1 rounded-full bg-white/20 backdrop-blur-md text-white hover:bg-white/40 transition-all flex items-center gap-1.5 text-xs font-medium"
-              >
-                <Maximize2 size={13} /> Full View
-              </button>
-            </div>
-          </div>
+      {/* Editorial Vertical Card Carousel Container */}
+      <div className="relative max-w-6xl mx-auto group">
+        {/* Navigation Arrow Left */}
+        <button
+          onClick={scrollLeftNav}
+          className="absolute -left-3 sm:-left-6 top-1/2 -translate-y-1/2 z-20 p-3 rounded-full bg-white/90 backdrop-blur-md text-neutral-800 shadow-xl hover:bg-white transition-all hover:scale-110 border border-neutral-100"
+          aria-label="Scroll Left"
+        >
+          <ChevronLeft size={22} />
+        </button>
+
+        {/* Navigation Arrow Right */}
+        <button
+          onClick={scrollRightNav}
+          className="absolute -right-3 sm:-right-6 top-1/2 -translate-y-1/2 z-20 p-3 rounded-full bg-white/90 backdrop-blur-md text-neutral-800 shadow-xl hover:bg-white transition-all hover:scale-110 border border-neutral-100"
+          aria-label="Scroll Right"
+        >
+          <ChevronRight size={22} />
+        </button>
+
+        {/* Auto-play toggle button */}
+        <div className="flex justify-end mb-4 pr-2">
+          <button
+            onClick={() => setIsPlaying(!isPlaying)}
+            className="flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium bg-rose-100/70 text-rose-700 hover:bg-rose-200/80 transition-all"
+          >
+            {isPlaying ? <Pause size={13} /> : <Play size={13} />}
+            <span>{isPlaying ? 'Pause Motion' : 'Play Motion'}</span>
+          </button>
         </div>
 
-        {/* Carousel Navigation Arrows */}
-        <button
-          onClick={showPrevSlide}
-          className="absolute left-2 top-1/2 -translate-y-1/2 p-2 rounded-full bg-white/80 backdrop-blur-md text-neutral-800 hover:bg-white shadow-md transition-all hover:scale-105"
-          aria-label="Previous Slide"
+        {/* Horizontal Carousel Track (Tall Vertical Portrait Cards) */}
+        <div
+          ref={scrollContainerRef}
+          className="flex gap-5 overflow-x-auto py-6 px-3 no-scrollbar scroll-smooth cursor-grab active:cursor-grabbing"
+          onMouseEnter={() => setIsPlaying(false)}
+          onMouseLeave={() => setIsPlaying(true)}
         >
-          <ChevronLeft size={18} />
-        </button>
-        <button
-          onClick={showNextSlide}
-          className="absolute right-2 top-1/2 -translate-y-1/2 p-2 rounded-full bg-white/80 backdrop-blur-md text-neutral-800 hover:bg-white shadow-md transition-all hover:scale-105"
-          aria-label="Next Slide"
-        >
-          <ChevronRight size={18} />
-        </button>
-
-        {/* Play/Pause Control */}
-        <button
-          onClick={() => setIsPlaying(!isPlaying)}
-          className="absolute right-3 top-3 p-1.5 rounded-full bg-black/50 text-white backdrop-blur-md hover:bg-black/70 transition-all"
-          title={isPlaying ? "Pause Auto-play" : "Start Auto-play"}
-        >
-          {isPlaying ? <Pause size={13} /> : <Play size={13} />}
-        </button>
-      </div>
-
-      {/* Thumbnail Navigation Strip with Max Limits */}
-      <div className="mt-5 overflow-x-auto pb-2 pt-1 no-scrollbar">
-        <div className="flex gap-2.5 justify-center min-w-max px-2">
           {galleryImages.map((img, idx) => (
-            <button
+            <div
               key={img.id}
-              onClick={() => {
-                setCurrentIndex(idx);
-                setIsPlaying(false);
-              }}
-              className={`relative w-14 h-14 sm:w-16 sm:h-16 max-w-[64px] max-h-[64px] rounded-lg overflow-hidden flex-shrink-0 transition-all duration-300 ${
-                currentIndex === idx 
-                  ? 'ring-2 ring-rose-400 scale-105 shadow-md' 
-                  : 'opacity-50 hover:opacity-100'
-              }`}
+              onClick={() => openLightbox(idx)}
+              className="relative flex-shrink-0 w-[240px] sm:w-[300px] h-[360px] sm:h-[450px] rounded-2xl overflow-hidden glass-card shadow-lg hover:shadow-2xl transition-all duration-500 ease-out hover:-translate-y-2 hover:scale-[1.03] cursor-pointer group/card border border-rose-100/60"
             >
-              <img src={img.url} alt={img.title} className="w-full h-full object-cover" />
-            </button>
+              <img
+                src={img.url}
+                alt={img.title}
+                className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover/card:scale-110"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/65 via-transparent to-transparent opacity-80 group-hover/card:opacity-90 transition-opacity flex items-end p-5">
+                <div className="text-white flex justify-between items-end w-full">
+                  <div>
+                    <span className="text-[10px] uppercase tracking-widest text-rose-200 font-semibold block mb-0.5">Mark & Glenda</span>
+                    <h3 className="font-serif text-lg font-light">Memory {img.id}</h3>
+                  </div>
+                  <div className="w-8 h-8 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center text-white group-hover/card:bg-white group-hover/card:text-neutral-800 transition-all">
+                    <Maximize2 size={14} />
+                  </div>
+                </div>
+              </div>
+            </div>
           ))}
         </div>
       </div>
 
-      {/* Marquee Ticker with Max Bounds */}
-      <div className="mt-8 overflow-hidden relative w-full py-2.5 border-y border-rose-200/40">
-        <div className="flex gap-3 animate-marquee whitespace-nowrap min-w-max">
+      {/* Infinite Bottom Ticker Strip */}
+      <div className="mt-12 overflow-hidden relative w-full py-3 border-y border-rose-200/40">
+        <div className="flex gap-4 animate-marquee whitespace-nowrap min-w-max">
           {[...galleryImages, ...galleryImages].map((img, idx) => (
             <div
               key={idx}
               onClick={() => openLightbox(idx % galleryImages.length)}
-              className="w-32 h-20 sm:w-36 sm:h-24 max-w-[144px] max-h-[96px] rounded-lg overflow-hidden flex-shrink-0 cursor-pointer hover:scale-105 transition-all shadow-sm border border-white/60 bg-neutral-900"
+              className="w-36 h-28 sm:w-44 sm:h-32 rounded-xl overflow-hidden flex-shrink-0 cursor-pointer hover:scale-105 transition-all shadow-sm border border-white/80 bg-neutral-900"
             >
               <img src={img.url} alt={img.title} className="w-full h-full object-cover" />
             </div>
@@ -160,25 +171,32 @@ export default function Gallery() {
         </div>
       </div>
 
-      {/* Lightbox Modal with Max Limits */}
+      {/* Full Picture Lightbox Modal */}
       {selectedIndex !== null && (
-        <div className="fixed inset-0 z-50 bg-black/90 backdrop-blur-md flex items-center justify-center p-4" onClick={closeLightbox}>
+        <div
+          className="fixed inset-0 z-50 bg-black/90 backdrop-blur-md flex items-center justify-center p-4"
+          onClick={closeLightbox}
+        >
           <button onClick={closeLightbox} className="absolute top-4 right-4 text-white/80 hover:text-white p-2">
-            <X size={24} />
+            <X size={28} />
           </button>
-          <button onClick={(e) => { e.stopPropagation(); showPrevLightbox(); }} className="absolute left-3 text-white/80 hover:text-white p-2 bg-white/10 rounded-full hover:bg-white/20">
-            <ChevronLeft size={24} />
+          <button onClick={(e) => { e.stopPropagation(); showPrevLightbox(); }} className="absolute left-3 text-white/80 hover:text-white p-3 bg-white/10 rounded-full hover:bg-white/20">
+            <ChevronLeft size={30} />
           </button>
-          <button onClick={(e) => { e.stopPropagation(); showNextLightbox(); }} className="absolute right-3 text-white/80 hover:text-white p-2 bg-white/10 rounded-full hover:bg-white/20">
-            <ChevronRight size={24} />
+          <button onClick={(e) => { e.stopPropagation(); showNextLightbox(); }} className="absolute right-3 text-white/80 hover:text-white p-3 bg-white/10 rounded-full hover:bg-white/20">
+            <ChevronRight size={30} />
           </button>
-          <img
-            src={galleryImages[selectedIndex].url}
-            alt="Enlarged view"
-            style={{ maxWidth: '80vw', maxHeight: '75vh' }}
-            className="w-auto h-auto object-contain rounded-lg shadow-2xl"
-            onClick={(e) => e.stopPropagation()}
-          />
+          
+          <div className="relative max-h-[85vh] max-w-[90vw] flex flex-col items-center" onClick={(e) => e.stopPropagation()}>
+            <img
+              src={galleryImages[selectedIndex].url}
+              alt="Full size view"
+              className="max-h-[80vh] max-w-[85vw] object-contain rounded-xl shadow-2xl"
+            />
+            <div className="mt-3 text-center text-white">
+              <p className="font-serif text-lg font-light">Mark & Glenda — Photo {selectedIndex + 1} of {galleryImages.length}</p>
+            </div>
+          </div>
         </div>
       )}
     </section>
