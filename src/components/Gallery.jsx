@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback, useRef } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { X, ChevronLeft, ChevronRight, Maximize2, Pause, Play } from 'lucide-react';
 
 const galleryImages = [
@@ -14,37 +14,21 @@ const galleryImages = [
 export default function Gallery() {
   const [selectedIndex, setSelectedIndex] = useState(null);
   const [isPlaying, setIsPlaying] = useState(true);
-  const scrollContainerRef = useRef(null);
+  const [activeSlide, setActiveSlide] = useState(0);
 
-  // Auto-scroll loop moving right-to-left continuously
+  const nextSlide = useCallback(() => {
+    setActiveSlide((prev) => (prev + 1) % galleryImages.length);
+  }, []);
+
+  const prevSlide = useCallback(() => {
+    setActiveSlide((prev) => (prev - 1 + galleryImages.length) % galleryImages.length);
+  }, []);
+
   useEffect(() => {
     if (!isPlaying) return;
-    const interval = setInterval(() => {
-      if (scrollContainerRef.current) {
-        const { scrollLeft, scrollWidth, clientWidth } = scrollContainerRef.current;
-        if (scrollLeft + clientWidth >= scrollWidth - 10) {
-          scrollContainerRef.current.scrollTo({ left: 0, behavior: 'smooth' });
-        } else {
-          scrollContainerRef.current.scrollBy({ left: 300, behavior: 'smooth' });
-        }
-      }
-    }, 3200);
+    const interval = setInterval(nextSlide, 3500);
     return () => clearInterval(interval);
-  }, [isPlaying]);
-
-  const scrollLeftNav = () => {
-    setIsPlaying(false);
-    if (scrollContainerRef.current) {
-      scrollContainerRef.current.scrollBy({ left: -300, behavior: 'smooth' });
-    }
-  };
-
-  const scrollRightNav = () => {
-    setIsPlaying(false);
-    if (scrollContainerRef.current) {
-      scrollContainerRef.current.scrollBy({ left: 300, behavior: 'smooth' });
-    }
-  };
+  }, [isPlaying, nextSlide]);
 
   const openLightbox = (index) => {
     setSelectedIndex(index);
@@ -80,80 +64,115 @@ export default function Gallery() {
     }
   }, [selectedIndex, closeLightbox, showNextLightbox, showPrevLightbox]);
 
+  // Helper to get 3 visible indices for 3-card carousel display
+  const getVisibleCards = () => {
+    const total = galleryImages.length;
+    const prev = (activeSlide - 1 + total) % total;
+    const next = (activeSlide + 1) % total;
+    return [
+      { index: prev, position: 'left' },
+      { index: activeSlide, position: 'center' },
+      { index: next, position: 'right' }
+    ];
+  };
+
   return (
     <section id="gallery" className="py-20 px-4 sm:px-8 max-w-7xl mx-auto relative overflow-hidden bg-[#FAF7F2]">
-      <div className="text-center max-w-xl mx-auto mb-10 relative z-10">
+      <div className="text-center max-w-xl mx-auto mb-8 relative z-10">
         <p className="text-rose-500 tracking-[0.2em] uppercase text-xs font-semibold mb-2">Our Moments</p>
         <h2 className="font-serif text-3xl sm:text-4xl text-neutral-800 tracking-tight">Photo Gallery</h2>
         <div className="w-12 h-0.5 bg-rose-300 mx-auto mt-4"></div>
       </div>
 
-      {/* Editorial Vertical Card Carousel Container */}
-      <div className="relative max-w-6xl mx-auto group">
-        {/* Navigation Arrow Left */}
+      {/* 3-Card Carousel Container */}
+      <div className="relative max-w-5xl mx-auto py-6">
+        {/* Previous Arrow */}
         <button
-          onClick={scrollLeftNav}
-          className="absolute -left-3 sm:-left-5 top-1/2 -translate-y-1/2 z-20 p-3 rounded-full bg-white/90 backdrop-blur-md text-neutral-800 shadow-xl hover:bg-white transition-all hover:scale-110 border border-neutral-100"
-          aria-label="Scroll Left"
+          onClick={prevSlide}
+          className="absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 z-30 p-3.5 rounded-full bg-white/90 backdrop-blur-md text-neutral-800 shadow-xl hover:bg-white transition-all hover:scale-110 border border-neutral-200"
+          aria-label="Previous Photo"
         >
-          <ChevronLeft size={22} />
+          <ChevronLeft size={24} />
         </button>
 
-        {/* Navigation Arrow Right */}
+        {/* Next Arrow */}
         <button
-          onClick={scrollRightNav}
-          className="absolute -right-3 sm:-right-5 top-1/2 -translate-y-1/2 z-20 p-3 rounded-full bg-white/90 backdrop-blur-md text-neutral-800 shadow-xl hover:bg-white transition-all hover:scale-110 border border-neutral-100"
-          aria-label="Scroll Right"
+          onClick={nextSlide}
+          className="absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 z-30 p-3.5 rounded-full bg-white/90 backdrop-blur-md text-neutral-800 shadow-xl hover:bg-white transition-all hover:scale-110 border border-neutral-200"
+          aria-label="Next Photo"
         >
-          <ChevronRight size={22} />
+          <ChevronRight size={24} />
         </button>
 
-        {/* Auto-play toggle button */}
-        <div className="flex justify-end mb-4 pr-2">
+        {/* Play/Pause Toggle */}
+        <div className="flex justify-center mb-6">
           <button
             onClick={() => setIsPlaying(!isPlaying)}
-            className="flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium bg-rose-100/70 text-rose-700 hover:bg-rose-200/80 transition-all"
+            className="flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-medium bg-rose-100/80 text-rose-700 hover:bg-rose-200 transition-all shadow-sm"
           >
-            {isPlaying ? <Pause size={13} /> : <Play size={13} />}
-            <span>{isPlaying ? 'Pause Motion' : 'Play Motion'}</span>
+            {isPlaying ? <Pause size={14} /> : <Play size={14} />}
+            <span>{isPlaying ? 'Pause Carousel' : 'Auto Play Carousel'}</span>
           </button>
         </div>
 
-        {/* Horizontal Carousel Track (Fixed Strict Portrait Cards) */}
-        <div
-          ref={scrollContainerRef}
-          className="flex gap-6 overflow-x-auto py-6 px-3 no-scrollbar scroll-smooth cursor-grab active:cursor-grabbing"
-          onMouseEnter={() => setIsPlaying(false)}
-          onMouseLeave={() => setIsPlaying(true)}
-        >
-          {galleryImages.map((img, idx) => (
-            <div
-              key={img.id}
-              onClick={() => openLightbox(idx)}
-              className="gallery-card-item glass-card shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 hover:scale-[1.03]"
-            >
-              <img
-                src={img.url}
-                alt={img.title}
-                className="gallery-card-img"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/65 via-transparent to-transparent opacity-80 hover:opacity-95 transition-opacity flex items-end p-4 pointer-events-none">
-                <div className="text-white flex justify-between items-end w-full">
-                  <div>
-                    <span className="text-[10px] uppercase tracking-widest text-rose-200 font-semibold block mb-0.5">Mark & Glenda</span>
-                    <h3 className="font-serif text-base font-light">Memory {img.id}</h3>
-                  </div>
-                  <div className="w-7 h-7 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center text-white">
-                    <Maximize2 size={13} />
+        {/* 3-Card Carousel Track */}
+        <div className="flex items-center justify-center gap-4 sm:gap-8 min-h-[380px] sm:min-h-[460px]">
+          {getVisibleCards().map(({ index, position }) => {
+            const img = galleryImages[index];
+            const isCenter = position === 'center';
+
+            return (
+              <div
+                key={`${img.id}-${position}`}
+                onClick={() => isCenter ? openLightbox(index) : setActiveSlide(index)}
+                className={`gallery-card-item glass-card shadow-xl transition-all duration-500 ease-out cursor-pointer ${
+                  isCenter
+                    ? 'z-20 scale-105 ring-4 ring-rose-300 shadow-2xl'
+                    : 'hidden sm:block opacity-60 scale-90 hover:opacity-90'
+                }`}
+              >
+                <img
+                  src={img.url}
+                  alt={img.title}
+                  className="gallery-card-img"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-85 transition-opacity flex items-end p-4 pointer-events-none">
+                  <div className="text-white flex justify-between items-end w-full">
+                    <div>
+                      <span className="text-[10px] uppercase tracking-widest text-rose-200 font-semibold block mb-0.5">Mark & Glenda</span>
+                      <h3 className="font-serif text-base font-light">Photo {index + 1} of {galleryImages.length}</h3>
+                    </div>
+                    {isCenter && (
+                      <div className="w-8 h-8 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center text-white">
+                        <Maximize2 size={14} />
+                      </div>
+                    )}
                   </div>
                 </div>
               </div>
-            </div>
+            );
+          })}
+        </div>
+
+        {/* Pagination Dots */}
+        <div className="flex justify-center gap-2 mt-6">
+          {galleryImages.map((_, idx) => (
+            <button
+              key={idx}
+              onClick={() => {
+                setActiveSlide(idx);
+                setIsPlaying(false);
+              }}
+              className={`h-2.5 rounded-full transition-all duration-300 ${
+                activeSlide === idx ? 'w-8 bg-rose-400' : 'w-2.5 bg-rose-200 hover:bg-rose-300'
+              }`}
+              aria-label={`Go to slide ${idx + 1}`}
+            />
           ))}
         </div>
       </div>
 
-      {/* Lightbox Modal (Full Photo Preview) */}
+      {/* Lightbox Modal */}
       {selectedIndex !== null && (
         <div
           className="fixed inset-0 z-50 bg-black/90 backdrop-blur-md flex items-center justify-center p-4"
