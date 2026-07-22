@@ -17,9 +17,9 @@ export default function Gallery() {
     setActiveSlide((prev) => (prev + 1) % galleryImages.length);
   }, []);
 
-  // Pure Automatic Carousel Play loop every 3 seconds
+  // Pure Automatic Carousel Play loop every 3.2 seconds
   useEffect(() => {
-    const interval = setInterval(nextSlide, 3000);
+    const interval = setInterval(nextSlide, 3200);
     return () => clearInterval(interval);
   }, [nextSlide]);
 
@@ -36,15 +36,15 @@ export default function Gallery() {
   };
 
   return (
-    <section id="gallery" className="py-16 px-4 sm:px-8 max-w-6xl mx-auto relative overflow-hidden bg-[#FAF7F2]">
-      <div className="text-center max-w-xl mx-auto mb-8 relative z-10">
+    <section id="gallery" className="py-20 px-4 sm:px-8 max-w-6xl mx-auto relative overflow-hidden bg-[#FAF7F2]">
+      <div className="text-center max-w-xl mx-auto mb-10 relative z-10">
         <p className="text-rose-500 tracking-[0.2em] uppercase text-xs font-semibold mb-2">Our Moments</p>
         <h2 className="font-serif text-3xl sm:text-4xl text-neutral-800 tracking-tight">Photo Gallery</h2>
         <div className="w-12 h-0.5 bg-rose-300 mx-auto mt-4"></div>
       </div>
 
-      {/* Pure Automatic Centered Row Carousel (No Click / No Lightbox) */}
-      <div className="w-full max-w-4xl mx-auto py-2">
+      {/* Pure Automatic Centered Printed Photograph Carousel */}
+      <div className="w-full max-w-5xl mx-auto py-2">
         {/* Horizontal Card Track */}
         <div className="gallery-carousel-track">
           {getVisibleCards().map(({ index, position }) => {
@@ -54,22 +54,25 @@ export default function Gallery() {
             return (
               <div
                 key={`${img.id}-${position}`}
-                className={`gallery-card-item glass-card shadow-xl transition-all duration-700 ease-in-out ${
+                className={`gallery-card-item ${
                   isCenter
-                    ? 'z-20 scale-105 ring-4 ring-rose-300 shadow-2xl opacity-100'
-                    : 'hidden sm:block opacity-60 scale-90'
+                    ? 'z-20 scale-105 shadow-2xl ring-2 ring-rose-200 opacity-100'
+                    : 'hidden sm:flex opacity-65 scale-90'
                 }`}
               >
-                <img
-                  src={img.url}
-                  alt={img.title}
-                  className="gallery-card-img"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-80 transition-opacity flex items-end p-4 pointer-events-none">
-                  <div className="text-white w-full">
-                    <span className="text-[10px] uppercase tracking-widest text-rose-200 font-semibold block mb-0.5">Mark & Glenda</span>
-                    <h3 className="font-serif text-base font-light">Memory {index + 1} of {galleryImages.length}</h3>
-                  </div>
+                {/* Uncropped Full Scale Image inside Photograph Frame */}
+                <div className="w-full h-[330px] sm:h-[340px] flex items-center justify-center overflow-hidden bg-[#FAF7F2] rounded-md border border-neutral-100">
+                  <img
+                    src={img.url}
+                    alt={img.title}
+                    className="gallery-card-img"
+                  />
+                </div>
+                {/* Physical Printed Photograph Bottom Margin & Label */}
+                <div className="pt-2 text-center">
+                  <p className="font-serif italic text-xs text-neutral-600 tracking-wider">
+                    Mark & Glenda — Photo {index + 1}
+                  </p>
                 </div>
               </div>
             );
@@ -77,7 +80,7 @@ export default function Gallery() {
         </div>
 
         {/* Minimalist Pagination Dots */}
-        <div className="flex justify-center gap-2 mt-6">
+        <div className="flex justify-center gap-2 mt-8">
           {galleryImages.map((_, idx) => (
             <div
               key={idx}
