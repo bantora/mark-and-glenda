@@ -1417,6 +1417,637 @@ h1, h2, h3, h4, .font-serif {
   animation: pulse-subtle 2s infinite ease-in-out;
 }
 
+/* ==========================================================================
+   Footer Styles & Discreet Host Login Link
+   ========================================================================== */
+.wedding-footer {
+  background: linear-gradient(180deg, rgba(250, 247, 242, 0.5) 0%, #F5EFE6 100%);
+  border-top: 1px solid var(--border-color);
+  padding: 4.5rem 1.5rem 2.5rem 1.5rem;
+  margin-top: 3rem;
+}
 
+.footer-container {
+  max-width: 1000px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
 
+.footer-brand {
+  margin-bottom: 1.75rem;
+}
 
+.footer-title {
+  font-size: 2.25rem;
+  color: var(--text-main);
+  font-weight: 400;
+  margin-bottom: 0.5rem;
+}
+
+.footer-meta {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}
+
+.footer-meta .meta-item {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.footer-meta .meta-icon {
+  color: var(--accent-blush);
+}
+
+.footer-meta .meta-dot {
+  color: var(--accent-blush);
+}
+
+.footer-divider {
+  width: 50px;
+  height: 1px;
+  background: var(--border-color);
+  margin-bottom: 2rem;
+}
+
+.footer-nav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.75rem;
+  flex-wrap: wrap;
+  margin-bottom: 3rem;
+}
+
+.footer-link {
+  color: var(--text-muted);
+  text-decoration: none;
+  font-size: 0.95rem;
+  font-weight: 500;
+  transition: color 0.2s ease;
+}
+
+.footer-link:hover {
+  color: var(--accent-blush);
+}
+
+.footer-rsvp-btn {
+  background: transparent;
+  border: 1px solid var(--accent-blush);
+  color: var(--accent-blush);
+  padding: 0.4rem 1.2rem;
+  border-radius: 50px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.footer-rsvp-btn:hover {
+  background: var(--accent-blush);
+  color: #ffffff;
+  box-shadow: 0 4px 15px rgba(212, 163, 152, 0.3);
+}
+
+.footer-bottom {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+  padding-top: 1.5rem;
+  border-top: 1px solid rgba(212, 163, 152, 0.15);
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+.footer-copyright {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.copyright-love {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.heart-inline {
+  color: var(--accent-blush);
+}
+
+.discreet-host-login-btn {
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  opacity: 0.7;
+  font-size: 0.8rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  cursor: pointer;
+  padding: 0.3rem 0.6rem;
+  border-radius: var(--radius-sm);
+  transition: all 0.2s ease;
+}
+
+.discreet-host-login-btn:hover {
+  opacity: 1;
+  color: var(--accent-blush);
+  background: rgba(212, 163, 152, 0.1);
+}
+
+.lock-icon-subtle {
+  color: var(--text-muted);
+}
+
+/* ==========================================================================
+   Admin Dashboard Modal & Controls Styles
+   ========================================================================== */
+.admin-modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 2100;
+  background: rgba(44, 42, 41, 0.65);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  animation: fadeIn 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.admin-modal-container {
+  position: relative;
+  max-width: 1100px;
+  width: 100%;
+  max-height: 92vh;
+  display: flex;
+  flex-direction: column;
+  background: rgba(255, 255, 255, 0.97);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border-color);
+  box-shadow: 0 25px 60px -15px rgba(44, 42, 41, 0.3);
+  overflow: hidden;
+  animation: modalSlideUp 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.admin-modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.5rem 2rem;
+  border-bottom: 1px solid var(--border-color);
+  background: rgba(250, 247, 242, 0.6);
+}
+
+.admin-header-title {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  color: var(--text-main);
+}
+
+.admin-header-icon {
+  color: var(--accent-blush);
+}
+
+.admin-header-title h2 {
+  font-size: 1.5rem;
+  font-weight: 500;
+}
+
+.admin-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.btn-admin-logout {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: transparent;
+  border: 1px solid var(--border-color);
+  color: var(--text-muted);
+  padding: 0.4rem 0.9rem;
+  border-radius: 50px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-admin-logout:hover {
+  background: #fef2f2;
+  color: #dc2626;
+  border-color: #fecaca;
+}
+
+.admin-modal-close-btn {
+  background: var(--accent-blush-light);
+  color: var(--text-main);
+  border: none;
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.admin-modal-close-btn:hover {
+  background: var(--accent-blush);
+  color: #ffffff;
+  transform: rotate(90deg);
+}
+
+/* Authentication Screen */
+.admin-login-wrapper {
+  padding: 4rem 1.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.admin-login-card {
+  max-width: 440px;
+  width: 100%;
+  padding: 2.5rem;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: #ffffff;
+  box-shadow: var(--shadow-card);
+}
+
+.admin-lock-icon-wrapper {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: var(--accent-blush-light);
+  color: var(--accent-blush);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1.5rem;
+}
+
+.admin-login-title {
+  font-size: 1.75rem;
+  color: var(--text-main);
+  margin-bottom: 0.5rem;
+}
+
+.admin-login-subtitle {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  margin-bottom: 1.5rem;
+  line-height: 1.5;
+}
+
+.admin-error-banner {
+  width: 100%;
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+  color: #dc2626;
+  padding: 0.65rem 1rem;
+  border-radius: var(--radius-sm);
+  font-size: 0.85rem;
+  margin-bottom: 1.25rem;
+  text-align: center;
+}
+
+.admin-login-form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.admin-input-group {
+  width: 100%;
+}
+
+.admin-input {
+  width: 100%;
+  padding: 0.8rem 1rem;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-color);
+  font-family: var(--font-sans);
+  font-size: 0.95rem;
+  transition: all 0.2s ease;
+}
+
+.admin-input:focus {
+  outline: none;
+  border-color: var(--accent-blush);
+  box-shadow: 0 0 0 3px rgba(212, 163, 152, 0.2);
+}
+
+.admin-login-btn {
+  width: 100%;
+  padding: 0.85rem;
+}
+
+/* Main Dashboard Body */
+.admin-dashboard-content {
+  padding: 1.75rem 2rem 2rem 2rem;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1.75rem;
+}
+
+/* Metrics Overview Cards */
+.admin-metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1.25rem;
+}
+
+.metric-card {
+  padding: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  background: #ffffff;
+  border: 1px solid var(--border-color);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.metric-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-soft);
+}
+
+.metric-icon-wrapper {
+  width: 52px;
+  height: 52px;
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.metric-icon-total {
+  background: #f0f4f8;
+  color: #3b82f6;
+}
+
+.metric-icon-attending {
+  background: var(--accent-sage-light);
+  color: var(--accent-sage);
+}
+
+.metric-icon-declined {
+  background: #fef2f2;
+  color: #ef4444;
+}
+
+.metric-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.metric-label {
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--text-muted);
+  font-weight: 600;
+  margin-bottom: 0.2rem;
+}
+
+.metric-value {
+  font-size: 2rem;
+  font-weight: 600;
+  color: var(--text-main);
+  line-height: 1;
+}
+
+/* Controls Bar */
+.admin-controls-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.admin-search-wrapper {
+  position: relative;
+  flex: 1;
+  min-width: 280px;
+  display: flex;
+  align-items: center;
+}
+
+.search-icon {
+  position: absolute;
+  left: 1rem;
+  color: var(--text-muted);
+  pointer-events: none;
+}
+
+.admin-search-input {
+  width: 100%;
+  padding: 0.7rem 1rem 0.7rem 2.75rem;
+  border-radius: 50px;
+  border: 1px solid var(--border-color);
+  background: #ffffff;
+  font-family: var(--font-sans);
+  font-size: 0.9rem;
+  transition: all 0.2s ease;
+}
+
+.admin-search-input:focus {
+  outline: none;
+  border-color: var(--accent-blush);
+  box-shadow: 0 0 0 3px rgba(212, 163, 152, 0.2);
+}
+
+.admin-action-buttons {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.btn-admin-secondary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: #ffffff;
+  border: 1px solid var(--border-color);
+  color: var(--text-main);
+  padding: 0.65rem 1.25rem;
+  border-radius: 50px;
+  font-size: 0.88rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-admin-secondary:hover {
+  background: var(--accent-blush-light);
+  border-color: var(--accent-blush);
+}
+
+.btn-export-csv {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.btn-export-csv:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none !important;
+}
+
+/* RSVPs Table */
+.admin-table-container {
+  background: #ffffff;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+
+.admin-state-container {
+  padding: 4rem 2rem;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: var(--text-muted);
+}
+
+.empty-state-icon {
+  color: var(--accent-blush);
+  margin-bottom: 1rem;
+  opacity: 0.6;
+}
+
+.empty-state-title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--text-main);
+  margin-bottom: 0.25rem;
+}
+
+.empty-state-sub {
+  font-size: 0.9rem;
+}
+
+.table-responsive {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.admin-rsvp-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  font-size: 0.9rem;
+}
+
+.admin-rsvp-table th {
+  background: rgba(250, 247, 242, 0.8);
+  color: var(--text-muted);
+  font-weight: 600;
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  padding: 1rem 1.25rem;
+  border-bottom: 1px solid var(--border-color);
+  white-space: nowrap;
+}
+
+.admin-rsvp-table td {
+  padding: 1rem 1.25rem;
+  border-bottom: 1px solid rgba(212, 163, 152, 0.15);
+  color: var(--text-main);
+  vertical-align: middle;
+}
+
+.admin-rsvp-table tr:last-child td {
+  border-bottom: none;
+}
+
+.admin-rsvp-table tr:hover td {
+  background: rgba(250, 247, 242, 0.4);
+}
+
+.guest-name-cell {
+  font-weight: 600;
+  color: var(--text-main);
+}
+
+.cell-icon {
+  color: var(--accent-blush);
+  flex-shrink: 0;
+}
+
+.contact-inline, .date-inline, .message-inline {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.25rem 0.75rem;
+  border-radius: 50px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.status-attending {
+  background: var(--accent-sage-light);
+  color: var(--accent-sage);
+  border: 1px solid rgba(123, 141, 124, 0.3);
+}
+
+.status-declined {
+  background: #fef2f2;
+  color: #dc2626;
+  border: 1px solid rgba(220, 38, 38, 0.2);
+}
+
+.muted-dash {
+  color: #a39e9a;
+}
+
+.message-cell {
+  max-width: 260px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.font-medium {
+  font-weight: 500;
+}
