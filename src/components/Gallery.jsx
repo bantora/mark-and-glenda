@@ -1,74 +1,34 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { X, ChevronLeft, ChevronRight, Maximize2, Camera, Heart } from 'lucide-react';
+import { X, ChevronLeft, ChevronRight, Maximize2, Pause, Play } from 'lucide-react';
 
 const galleryImages = [
-  {
-    id: 1,
-    url: 'https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1200&q=80',
-    title: 'Golden Hour Romance',
-    category: 'Pre-Wedding',
-    caption: 'Hand in hand under the golden hour sky.'
-  },
-  {
-    id: 2,
-    url: 'https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=1200&q=80',
-    title: 'Eternal Vows',
-    category: 'Ceremony',
-    caption: 'Promising forever in front of our loved ones.'
-  },
-  {
-    id: 3,
-    url: 'https://images.unsplash.com/photo-1583939003579-730e3918a45a?auto=format&fit=crop&w=1200&q=80',
-    title: 'First Dance',
-    category: 'Reception',
-    caption: 'Lost in the rhythm of our love song.'
-  },
-  {
-    id: 4,
-    url: 'https://images.unsplash.com/photo-1522673607200-164d1b6ce486?auto=format&fit=crop&w=1200&q=80',
-    title: 'Warm Embraces',
-    category: 'Portraits',
-    caption: 'Capturing the quiet, cherished moments together.'
-  },
-  {
-    id: 5,
-    url: 'https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?auto=format&fit=crop&w=1200&q=80',
-    title: 'Forever & Always',
-    category: 'Pre-Wedding',
-    caption: 'Walking together into our next beautiful chapter.'
-  },
-  {
-    id: 6,
-    url: 'https://images.unsplash.com/photo-1515934751635-c81c6bc9a2d8?auto=format&fit=crop&w=1200&q=80',
-    title: 'The Celebration',
-    category: 'Reception',
-    caption: 'Surrounded by joy, laughter, and endless love.'
-  },
-  {
-    id: 7,
-    url: 'https://images.unsplash.com/photo-1520854221256-17451cc331bf?auto=format&fit=crop&w=1200&q=80',
-    title: 'Pure Happiness',
-    category: 'Portraits',
-    caption: 'Unfiltered joy on our special day.'
-  },
-  {
-    id: 8,
-    url: 'https://images.unsplash.com/photo-1532712938310-34cb3982ef74?auto=format&fit=crop&w=1200&q=80',
-    title: 'Sunset Whispers',
-    category: 'Pre-Wedding',
-    caption: 'Watching the horizon as one.'
-  }
+  { id: 1, url: '/photos/XH1S0300.jpg', title: 'Mark & Glenda' },
+  { id: 2, url: '/photos/XH1S0357.jpg', title: 'Mark & Glenda' },
+  { id: 3, url: '/photos/XH1S0455.jpg', title: 'Mark & Glenda' },
+  { id: 4, url: '/photos/XH1S0470.jpg', title: 'Mark & Glenda' },
+  { id: 5, url: '/photos/XH1S0482.jpg', title: 'Mark & Glenda' },
+  { id: 6, url: '/photos/XH1S0495.jpg', title: 'Mark & Glenda' },
+  { id: 7, url: '/photos/XH1S0508.jpg', title: 'Mark & Glenda' }
 ];
 
 export default function Gallery() {
   const [selectedIndex, setSelectedIndex] = useState(null);
-  const [activeFilter, setActiveFilter] = useState('All');
+  const [isPlaying, setIsPlaying] = useState(true);
+  const [currentIndex, setCurrentIndex] = useState(0);
 
-  const categories = ['All', 'Pre-Wedding', 'Ceremony', 'Reception', 'Portraits'];
+  const showNextSlide = useCallback(() => {
+    setCurrentIndex((prev) => (prev + 1) % galleryImages.length);
+  }, []);
 
-  const filteredImages = activeFilter === 'All'
-    ? galleryImages
-    : galleryImages.filter(img => img.category === activeFilter);
+  const showPrevSlide = useCallback(() => {
+    setCurrentIndex((prev) => (prev - 1 + galleryImages.length) % galleryImages.length);
+  }, []);
+
+  useEffect(() => {
+    if (!isPlaying) return;
+    const interval = setInterval(showNextSlide, 3500);
+    return () => clearInterval(interval);
+  }, [isPlaying, showNextSlide]);
 
   const openLightbox = (index) => {
     setSelectedIndex(index);
@@ -78,160 +38,146 @@ export default function Gallery() {
     setSelectedIndex(null);
   }, []);
 
-  const showNext = useCallback(() => {
+  const showNextLightbox = useCallback(() => {
     if (selectedIndex === null) return;
-    setSelectedIndex((prev) => (prev + 1) % filteredImages.length);
-  }, [selectedIndex, filteredImages.length]);
+    setSelectedIndex((prev) => (prev + 1) % galleryImages.length);
+  }, [selectedIndex]);
 
-  const showPrev = useCallback(() => {
+  const showPrevLightbox = useCallback(() => {
     if (selectedIndex === null) return;
-    setSelectedIndex((prev) => (prev - 1 + filteredImages.length) % filteredImages.length);
-  }, [selectedIndex, filteredImages.length]);
+    setSelectedIndex((prev) => (prev - 1 + galleryImages.length) % galleryImages.length);
+  }, [selectedIndex]);
 
-  // Lock body scroll and set up keyboard listeners when lightbox is open
   useEffect(() => {
     if (selectedIndex !== null) {
       document.body.style.overflow = 'hidden';
-
       const handleKeyDown = (e) => {
         if (e.key === 'Escape') closeLightbox();
-        if (e.key === 'ArrowRight') showNext();
-        if (e.key === 'ArrowLeft') showPrev();
+        if (e.key === 'ArrowRight') showNextLightbox();
+        if (e.key === 'ArrowLeft') showPrevLightbox();
       };
-
       window.addEventListener('keydown', handleKeyDown);
       return () => {
         document.body.style.overflow = '';
         window.removeEventListener('keydown', handleKeyDown);
       };
     }
-  }, [selectedIndex, closeLightbox, showNext, showPrev]);
+  }, [selectedIndex, closeLightbox, showNextLightbox, showPrevLightbox]);
 
   return (
-    <section id="gallery" className="gallery-section">
-      <div className="section-header">
-        <p className="section-subtitle">Our Moments</p>
-        <h2 className="section-title font-serif">Photo Gallery</h2>
-        <div className="section-divider"></div>
+    <section id="gallery" className="py-20 px-4 sm:px-6 max-w-7xl mx-auto overflow-hidden">
+      <div className="text-center max-w-xl mx-auto mb-12">
+        <p className="text-rose-500 tracking-widest uppercase text-xs font-semibold mb-2">Our Moments</p>
+        <h2 className="font-serif text-3xl sm:text-4xl text-neutral-800">Photo Gallery</h2>
+        <div className="w-12 h-0.5 bg-rose-300 mx-auto mt-4"></div>
       </div>
 
-      {/* Category Filter Tabs */}
-      <div className="gallery-filter-bar">
-        {categories.map((cat) => (
-          <button
-            key={cat}
-            onClick={() => setActiveFilter(cat)}
-            className={`gallery-filter-btn ${activeFilter === cat ? 'active' : ''}`}
-          >
-            {cat}
-          </button>
-        ))}
-      </div>
-
-      {/* Masonry / Responsive Image Grid */}
-      <div className="gallery-masonry">
-        {filteredImages.map((image, idx) => (
-          <div
-            key={image.id}
-            className="gallery-item glass-card"
-            onClick={() => openLightbox(idx)}
-            role="button"
-            tabIndex={0}
-            aria-label={`View photo: ${image.title}`}
-            onKeyDown={(e) => {
-              if (e.key === 'Enter' || e.key === ' ') {
-                e.preventDefault();
-                openLightbox(idx);
-              }
-            }}
-          >
-            <div className="gallery-image-wrapper">
-              <img
-                src={image.url}
-                alt={image.title}
-                loading="lazy"
-                className="gallery-image"
-              />
-              <div className="gallery-overlay">
-                <div className="gallery-overlay-icon">
-                  <Maximize2 size={24} />
-                </div>
-                <div className="gallery-overlay-content">
-                  <span className="gallery-category-badge">{image.category}</span>
-                  <h3 className="gallery-item-title font-serif">{image.title}</h3>
-                  <p className="gallery-item-caption">{image.caption}</p>
-                </div>
+      {/* Main Carousel Display */}
+      <div className="relative max-w-5xl mx-auto group">
+        {/* Main Featured Slide */}
+        <div className="relative h-[380px] sm:h-[550px] rounded-2xl overflow-hidden glass-card shadow-2xl transition-all">
+          <img
+            src={galleryImages[currentIndex].url}
+            alt={galleryImages[currentIndex].title}
+            className="w-full h-full object-cover object-center transition-all duration-700 ease-out"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent flex items-end p-6 sm:p-10">
+            <div className="text-white flex justify-between items-end w-full">
+              <div>
+                <p className="text-rose-200 text-xs uppercase tracking-widest font-semibold mb-1">Mark & Glenda</p>
+                <h3 className="font-serif text-2xl sm:text-3xl font-light">Memory {currentIndex + 1} of {galleryImages.length}</h3>
               </div>
+              <button
+                onClick={() => openLightbox(currentIndex)}
+                className="p-3 rounded-full bg-white/20 backdrop-blur-md text-white hover:bg-white/40 transition-all flex items-center gap-2 text-xs font-medium"
+              >
+                <Maximize2 size={16} /> Enlarge
+              </button>
             </div>
           </div>
-        ))}
-      </div>
+        </div>
 
-      {/* Interactive Lightbox Modal */}
-      {selectedIndex !== null && filteredImages[selectedIndex] && (
-        <div
-          className="lightbox-backdrop"
-          onClick={closeLightbox}
-          role="dialog"
-          aria-modal="true"
-          aria-label="Photo Lightbox"
+        {/* Carousel Navigation Arrows */}
+        <button
+          onClick={showPrevSlide}
+          className="absolute left-4 top-1/2 -translate-y-1/2 p-3 rounded-full bg-white/80 backdrop-blur-md text-neutral-800 hover:bg-white shadow-lg transition-all hover:scale-110"
+          aria-label="Previous Slide"
         >
-          <div
-            className="lightbox-content"
+          <ChevronLeft size={24} />
+        </button>
+        <button
+          onClick={showNextSlide}
+          className="absolute right-4 top-1/2 -translate-y-1/2 p-3 rounded-full bg-white/80 backdrop-blur-md text-neutral-800 hover:bg-white shadow-lg transition-all hover:scale-110"
+          aria-label="Next Slide"
+        >
+          <ChevronRight size={24} />
+        </button>
+
+        {/* Play/Pause Control */}
+        <button
+          onClick={() => setIsPlaying(!isPlaying)}
+          className="absolute right-4 top-4 p-2.5 rounded-full bg-black/40 text-white backdrop-blur-md hover:bg-black/60 transition-all"
+          title={isPlaying ? "Pause Auto-play" : "Start Auto-play"}
+        >
+          {isPlaying ? <Pause size={16} /> : <Play size={16} />}
+        </button>
+      </div>
+
+      {/* Thumbnail Strip (Moving right to left) */}
+      <div className="mt-8 overflow-x-auto pb-4 pt-2 no-scrollbar">
+        <div className="flex gap-4 justify-center min-w-max px-4">
+          {galleryImages.map((img, idx) => (
+            <button
+              key={img.id}
+              onClick={() => {
+                setCurrentIndex(idx);
+                setIsPlaying(false);
+              }}
+              className={`relative w-24 h-24 sm:w-32 sm:h-32 rounded-xl overflow-hidden flex-shrink-0 transition-all duration-300 ${
+                currentIndex === idx 
+                  ? 'ring-4 ring-rose-400 scale-105 shadow-lg' 
+                  : 'opacity-60 hover:opacity-100 hover:scale-95'
+              }`}
+            >
+              <img src={img.url} alt={img.title} className="w-full h-full object-cover" />
+            </button>
+          ))}
+        </div>
+      </div>
+
+      {/* Continuous Marquee Ticker (Moving Right to Left) */}
+      <div className="mt-12 overflow-hidden relative w-full py-4 border-y border-rose-200/40">
+        <div className="flex gap-6 animate-marquee whitespace-nowrap min-w-max">
+          {[...galleryImages, ...galleryImages].map((img, idx) => (
+            <div
+              key={idx}
+              onClick={() => openLightbox(idx % galleryImages.length)}
+              className="w-48 h-32 rounded-xl overflow-hidden flex-shrink-0 cursor-pointer hover:scale-105 transition-all shadow-sm"
+            >
+              <img src={img.url} alt={img.title} className="w-full h-full object-cover" />
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Lightbox Modal */}
+      {selectedIndex !== null && (
+        <div className="fixed inset-0 z-50 bg-black/90 backdrop-blur-md flex items-center justify-center p-4" onClick={closeLightbox}>
+          <button onClick={closeLightbox} className="absolute top-6 right-6 text-white/80 hover:text-white p-2">
+            <X size={28} />
+          </button>
+          <button onClick={(e) => { e.stopPropagation(); showPrevLightbox(); }} className="absolute left-4 text-white/80 hover:text-white p-3 bg-white/10 rounded-full hover:bg-white/20">
+            <ChevronLeft size={32} />
+          </button>
+          <button onClick={(e) => { e.stopPropagation(); showNextLightbox(); }} className="absolute right-4 text-white/80 hover:text-white p-3 bg-white/10 rounded-full hover:bg-white/20">
+            <ChevronRight size={32} />
+          </button>
+          <img
+            src={galleryImages[selectedIndex].url}
+            alt="Enlarged view"
+            className="max-h-[85vh] max-w-[90vw] object-contain rounded-lg shadow-2xl"
             onClick={(e) => e.stopPropagation()}
-          >
-            {/* Close Button */}
-            <button
-              onClick={closeLightbox}
-              className="lightbox-close-btn"
-              aria-label="Close Lightbox"
-            >
-              <X size={24} />
-            </button>
-
-            {/* Prev Button */}
-            <button
-              onClick={showPrev}
-              className="lightbox-nav-btn lightbox-prev-btn"
-              aria-label="Previous Image"
-            >
-              <ChevronLeft size={32} />
-            </button>
-
-            {/* Next Button */}
-            <button
-              onClick={showNext}
-              className="lightbox-nav-btn lightbox-next-btn"
-              aria-label="Next Image"
-            >
-              <ChevronRight size={32} />
-            </button>
-
-            {/* Image Preview */}
-            <div className="lightbox-image-container">
-              <img
-                src={filteredImages[selectedIndex].url}
-                alt={filteredImages[selectedIndex].title}
-                className="lightbox-image"
-              />
-            </div>
-
-            {/* Lightbox Footer Info */}
-            <div className="lightbox-footer">
-              <div className="lightbox-counter">
-                <Camera size={16} />
-                <span>
-                  {selectedIndex + 1} / {filteredImages.length}
-                </span>
-              </div>
-              <h3 className="lightbox-title font-serif">
-                {filteredImages[selectedIndex].title}
-              </h3>
-              <p className="lightbox-caption">
-                {filteredImages[selectedIndex].caption}
-              </p>
-            </div>
-          </div>
+          />
         </div>
       )}
     </section>
