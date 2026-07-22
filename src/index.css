@@ -78,6 +78,41 @@ h1, h2, h3, h4, .font-serif {
   scrollbar-width: none;
 }
 
+.gallery-card-item {
+  width: 280px !important;
+  max-width: 280px !important;
+  height: 420px !important;
+  max-height: 420px !important;
+  flex-shrink: 0 !important;
+  position: relative !important;
+  overflow: hidden !important;
+  border-radius: 16px !important;
+  cursor: pointer !important;
+}
+
+@media (max-width: 640px) {
+  .gallery-card-item {
+    width: 220px !important;
+    max-width: 220px !important;
+    height: 330px !important;
+    max-height: 330px !important;
+  }
+}
+
+.gallery-card-img {
+  width: 100% !important;
+  height: 100% !important;
+  max-width: 100% !important;
+  max-height: 100% !important;
+  object-fit: cover !important;
+  display: block !important;
+  transition: transform 0.6s ease !important;
+}
+
+.gallery-card-item:hover .gallery-card-img {
+  transform: scale(1.08) !important;
+}
+
 .navbar-header {
   position: fixed;
   top: 0;

@@ -25,7 +25,7 @@ export default function Gallery() {
         if (scrollLeft + clientWidth >= scrollWidth - 10) {
           scrollContainerRef.current.scrollTo({ left: 0, behavior: 'smooth' });
         } else {
-          scrollContainerRef.current.scrollBy({ left: 280, behavior: 'smooth' });
+          scrollContainerRef.current.scrollBy({ left: 300, behavior: 'smooth' });
         }
       }
     }, 3200);
@@ -35,14 +35,14 @@ export default function Gallery() {
   const scrollLeftNav = () => {
     setIsPlaying(false);
     if (scrollContainerRef.current) {
-      scrollContainerRef.current.scrollBy({ left: -320, behavior: 'smooth' });
+      scrollContainerRef.current.scrollBy({ left: -300, behavior: 'smooth' });
     }
   };
 
   const scrollRightNav = () => {
     setIsPlaying(false);
     if (scrollContainerRef.current) {
-      scrollContainerRef.current.scrollBy({ left: 320, behavior: 'smooth' });
+      scrollContainerRef.current.scrollBy({ left: 300, behavior: 'smooth' });
     }
   };
 
@@ -82,9 +82,6 @@ export default function Gallery() {
 
   return (
     <section id="gallery" className="py-20 px-4 sm:px-8 max-w-7xl mx-auto relative overflow-hidden bg-[#FAF7F2]">
-      {/* Background Decorative Botanical Flourish Accent */}
-      <div className="absolute top-0 right-0 w-64 h-64 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-rose-100/40 via-transparent to-transparent pointer-events-none"></div>
-
       <div className="text-center max-w-xl mx-auto mb-10 relative z-10">
         <p className="text-rose-500 tracking-[0.2em] uppercase text-xs font-semibold mb-2">Our Moments</p>
         <h2 className="font-serif text-3xl sm:text-4xl text-neutral-800 tracking-tight">Photo Gallery</h2>
@@ -96,7 +93,7 @@ export default function Gallery() {
         {/* Navigation Arrow Left */}
         <button
           onClick={scrollLeftNav}
-          className="absolute -left-3 sm:-left-6 top-1/2 -translate-y-1/2 z-20 p-3 rounded-full bg-white/90 backdrop-blur-md text-neutral-800 shadow-xl hover:bg-white transition-all hover:scale-110 border border-neutral-100"
+          className="absolute -left-3 sm:-left-5 top-1/2 -translate-y-1/2 z-20 p-3 rounded-full bg-white/90 backdrop-blur-md text-neutral-800 shadow-xl hover:bg-white transition-all hover:scale-110 border border-neutral-100"
           aria-label="Scroll Left"
         >
           <ChevronLeft size={22} />
@@ -105,7 +102,7 @@ export default function Gallery() {
         {/* Navigation Arrow Right */}
         <button
           onClick={scrollRightNav}
-          className="absolute -right-3 sm:-right-6 top-1/2 -translate-y-1/2 z-20 p-3 rounded-full bg-white/90 backdrop-blur-md text-neutral-800 shadow-xl hover:bg-white transition-all hover:scale-110 border border-neutral-100"
+          className="absolute -right-3 sm:-right-5 top-1/2 -translate-y-1/2 z-20 p-3 rounded-full bg-white/90 backdrop-blur-md text-neutral-800 shadow-xl hover:bg-white transition-all hover:scale-110 border border-neutral-100"
           aria-label="Scroll Right"
         >
           <ChevronRight size={22} />
@@ -122,10 +119,10 @@ export default function Gallery() {
           </button>
         </div>
 
-        {/* Horizontal Carousel Track (Tall Vertical Portrait Cards) */}
+        {/* Horizontal Carousel Track (Fixed Strict Portrait Cards) */}
         <div
           ref={scrollContainerRef}
-          className="flex gap-5 overflow-x-auto py-6 px-3 no-scrollbar scroll-smooth cursor-grab active:cursor-grabbing"
+          className="flex gap-6 overflow-x-auto py-6 px-3 no-scrollbar scroll-smooth cursor-grab active:cursor-grabbing"
           onMouseEnter={() => setIsPlaying(false)}
           onMouseLeave={() => setIsPlaying(true)}
         >
@@ -133,21 +130,21 @@ export default function Gallery() {
             <div
               key={img.id}
               onClick={() => openLightbox(idx)}
-              className="relative flex-shrink-0 w-[240px] sm:w-[300px] h-[360px] sm:h-[450px] rounded-2xl overflow-hidden glass-card shadow-lg hover:shadow-2xl transition-all duration-500 ease-out hover:-translate-y-2 hover:scale-[1.03] cursor-pointer group/card border border-rose-100/60"
+              className="gallery-card-item glass-card shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 hover:scale-[1.03]"
             >
               <img
                 src={img.url}
                 alt={img.title}
-                className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover/card:scale-110"
+                className="gallery-card-img"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/65 via-transparent to-transparent opacity-80 group-hover/card:opacity-90 transition-opacity flex items-end p-5">
+              <div className="absolute inset-0 bg-gradient-to-t from-black/65 via-transparent to-transparent opacity-80 hover:opacity-95 transition-opacity flex items-end p-4 pointer-events-none">
                 <div className="text-white flex justify-between items-end w-full">
                   <div>
                     <span className="text-[10px] uppercase tracking-widest text-rose-200 font-semibold block mb-0.5">Mark & Glenda</span>
-                    <h3 className="font-serif text-lg font-light">Memory {img.id}</h3>
+                    <h3 className="font-serif text-base font-light">Memory {img.id}</h3>
                   </div>
-                  <div className="w-8 h-8 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center text-white group-hover/card:bg-white group-hover/card:text-neutral-800 transition-all">
-                    <Maximize2 size={14} />
+                  <div className="w-7 h-7 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center text-white">
+                    <Maximize2 size={13} />
                   </div>
                 </div>
               </div>
@@ -156,22 +153,7 @@ export default function Gallery() {
         </div>
       </div>
 
-      {/* Infinite Bottom Ticker Strip */}
-      <div className="mt-12 overflow-hidden relative w-full py-3 border-y border-rose-200/40">
-        <div className="flex gap-4 animate-marquee whitespace-nowrap min-w-max">
-          {[...galleryImages, ...galleryImages].map((img, idx) => (
-            <div
-              key={idx}
-              onClick={() => openLightbox(idx % galleryImages.length)}
-              className="w-36 h-28 sm:w-44 sm:h-32 rounded-xl overflow-hidden flex-shrink-0 cursor-pointer hover:scale-105 transition-all shadow-sm border border-white/80 bg-neutral-900"
-            >
-              <img src={img.url} alt={img.title} className="w-full h-full object-cover" />
-            </div>
-          ))}
-        </div>
-      </div>
-
-      {/* Full Picture Lightbox Modal */}
+      {/* Lightbox Modal (Full Photo Preview) */}
       {selectedIndex !== null && (
         <div
           className="fixed inset-0 z-50 bg-black/90 backdrop-blur-md flex items-center justify-center p-4"
@@ -191,7 +173,8 @@ export default function Gallery() {
             <img
               src={galleryImages[selectedIndex].url}
               alt="Full size view"
-              className="max-h-[80vh] max-w-[85vw] object-contain rounded-xl shadow-2xl"
+              style={{ maxWidth: '80vw', maxHeight: '80vh', objectFit: 'contain' }}
+              className="rounded-xl shadow-2xl"
             />
             <div className="mt-3 text-center text-white">
               <p className="font-serif text-lg font-light">Mark & Glenda — Photo {selectedIndex + 1} of {galleryImages.length}</p>
