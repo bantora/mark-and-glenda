@@ -1,0 +1,47 @@
+:root {
+  --bg-main: #FAF7F2;
+  --bg-card: rgba(255, 255, 255, 0.85);
+  --bg-card-hover: rgba(255, 255, 255, 0.95);
+  --text-main: #2C2A29;
+  --text-muted: #66605C;
+  --accent-blush: #D4A398;
+  --accent-blush-light: #F4EBE8;
+  --accent-sage: #7B8D7C;
+  --accent-sage-light: #EBF0EC;
+  --accent-gold: #D4AF37;
+  --border-color: rgba(212, 163, 152, 0.25);
+  --radius-sm: 8px;
+  --radius-md: 16px;
+  --radius-lg: 24px;
+  --font-serif: 'Playfair Display', serif;
+  --font-sans: 'Inter', sans-serif;
+  --shadow-soft: 0 10px 30px rgba(44, 42, 41, 0.05);
+  --shadow-card: 0 15px 35px rgba(212, 163, 152, 0.12);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: var(--bg-main);
+  color: var(--text-main);
+  font-family: var(--font-sans);
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+h1, h2, h3, h4, .font-serif {
+  font-family: var(--font-serif);
+}
+
+.glass-card {
+  background: var(--bg-card);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-card);
+}
