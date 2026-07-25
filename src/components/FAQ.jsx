@@ -16,7 +16,7 @@ const faqData = [
   },
   {
     question: "Can I bring a +1 or extra guests?",
-    answer: "Due to venue capacity restrictions, we can only accommodate guests listed on your invitation. When submitting your RSVP online, you will be able to confirm your allocated guest count and +1 details."
+    answer: "Due to venue capacity restrictions, we can only accommodate guests listed on your invitation."
   },
   {
     question: "What is your gift preference?",

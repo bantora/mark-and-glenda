@@ -35,7 +35,7 @@ The objective of this project is to build a modern, high-end, responsive wedding
   * Text & Headings: Deep Warm Charcoal (`#2C2A29`)
   * Cards & Modals: Glassmorphism Translucent White (`rgba(255, 255, 255, 0.85)`)
 * **Typography**:
-  * Headings / Names: *Playfair Display* / *Cormorant Garamond* (Serif Editorial)
+  * Headings / Names: *Great Vibes* (Elegant Romantic Cursive / Script) with *Playfair Display* fallback
   * Body / UI Controls: *Inter* / *Plus Jakarta Sans* (Clean Modern Sans-Serif)
 * **Animations**:
   * Micro-animations for floral leaf accents and button hovers
@@ -47,12 +47,12 @@ The objective of this project is to build a modern, high-end, responsive wedding
 ## 4. Core Features & Page Architecture
 
 1. **Glassmorphic Navigation Bar**:
-   * Brand initials (`M & G`)
-   * Navigation links (*Schedule, Gallery, Details, Gifts, FAQ*)
+   * Brand initials (`M & G`) styled in cursive script
+   * Navigation links (*Schedule, Details, Gallery, Gifts*) styled in cursive typography (`Great Vibes`)
    * Prominent `RSVP` Action Button
 
 2. **Hero Section**:
-   * Header: "Mark & Glenda"
+   * Header: "Mark & Glenda" (with adjusted ampersand spacing and kerning for cursive headings)
    * Subtitle: "Invite you to join our wedding celebration"
    * Date & Venue display: December 14, 2026
    * Live countdown timer to Dec 14, 2026

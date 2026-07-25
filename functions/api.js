@@ -89,6 +89,10 @@ export async function handleRequest(request, env) {
     }
   }
 
+  if (env && env.ASSETS) {
+    return env.ASSETS.fetch(request);
+  }
+
   return new Response('Not found', { status: 404, headers: corsHeaders });
 }
 

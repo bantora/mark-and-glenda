@@ -1,12 +1,12 @@
 {
-  "name": "mark-and-glenda-rsvp-api",
-  "main": "functions/api.js",
-  "compatibility_date": "2024-01-01",
+  "name": "mark-and-glenda-wedding",
+  "pages_build_output_dir": "./dist",
+  "compatibility_date": "2024-09-23",
   "d1_databases": [
     {
       "binding": "DB",
       "database_name": "wedding-rsvp-db",
-      "database_id": "local-d1"
+      "database_id": "e985b1e8-96c2-4a16-9385-6ae917598f50"
     }
   ]
 }

@@ -14,7 +14,8 @@
   --radius-sm: 8px;
   --radius-md: 16px;
   --radius-lg: 24px;
-  --font-serif: 'Playfair Display', serif;
+  --font-cursive: 'Great Vibes', cursive;
+  --font-serif: 'Great Vibes', 'Playfair Display', cursive, serif;
   --font-sans: 'Inter', sans-serif;
   --shadow-soft: 0 10px 30px rgba(44, 42, 41, 0.05);
   --shadow-card: 0 15px 35px rgba(212, 163, 152, 0.12);
@@ -39,8 +40,14 @@ body {
   overflow-x: hidden;
 }
 
-h1, h2, h3, h4, .font-serif {
-  font-family: var(--font-serif);
+h1, h2, h3, h4, .font-serif, .font-cursive, .font-heading {
+  font-family: var(--font-cursive);
+  font-weight: 400;
+  letter-spacing: 0.5px;
+}
+
+.font-serif {
+  font-family: var(--font-cursive);
 }
 
 .glass-card {
@@ -188,9 +195,9 @@ h1, h2, h3, h4, .font-serif {
   align-items: center;
   gap: 0.35rem;
   text-decoration: none;
-  font-family: var(--font-serif);
-  font-size: 1.5rem;
-  font-weight: 600;
+  font-family: var(--font-cursive);
+  font-size: 1.85rem;
+  font-weight: 400;
   color: var(--text-main);
   letter-spacing: 1px;
 }
@@ -214,8 +221,10 @@ h1, h2, h3, h4, .font-serif {
 .nav-link {
   text-decoration: none;
   color: var(--text-muted);
-  font-weight: 500;
-  font-size: 0.95rem;
+  font-family: var(--font-cursive);
+  font-weight: 400;
+  font-size: 1.35rem;
+  letter-spacing: 0.5px;
   transition: color 0.2s ease;
   position: relative;
 }
@@ -289,8 +298,9 @@ h1, h2, h3, h4, .font-serif {
 .mobile-nav-link {
   text-decoration: none;
   color: var(--text-main);
-  font-size: 1.1rem;
-  font-weight: 500;
+  font-family: var(--font-cursive);
+  font-size: 1.6rem;
+  font-weight: 400;
   padding: 0.5rem 0;
   border-bottom: 1px solid var(--accent-blush-light);
 }
@@ -391,16 +401,18 @@ h1, h2, h3, h4, .font-serif {
   font-size: clamp(3rem, 8vw, 5.5rem);
   font-weight: 400;
   color: var(--text-main);
-  line-height: 1.1;
+  line-height: 1.25;
   margin-bottom: 1.5rem;
-  letter-spacing: -0.5px;
+  letter-spacing: 0.02em;
+  word-spacing: 0.15em;
 }
 
 .hero-title .ampersand {
   font-style: italic;
   color: var(--accent-blush);
   font-weight: 300;
-  margin: 0 0.2rem;
+  margin: 0 0.75rem;
+  display: inline-block;
 }
 
 .hero-meta {
