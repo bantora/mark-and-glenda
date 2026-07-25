@@ -37,6 +37,8 @@ The objective of this project is to build a modern, high-end, responsive wedding
 * **Typography**:
   * Headings / Names: *Great Vibes* (Elegant Romantic Cursive / Script) with *Playfair Display* fallback
   * Body / UI Controls: *Inter* / *Plus Jakarta Sans* (Clean Modern Sans-Serif)
+* **Branding & Tab Favicon**:
+  * Custom `M & G` Monogram Emblem badge styled in cursive script (`Great Vibes`), Rose Gold Heart & Botanical Leaf Frame (`public/favicon.svg`)
 * **Animations**:
   * Micro-animations for floral leaf accents and button hovers
   * Smooth fade-in scroll reveals

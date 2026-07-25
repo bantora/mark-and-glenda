@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FAF7F2"/>
+      <stop offset="100%" stop-color="#F5EFE6"/>
+    </linearGradient>
+    <linearGradient id="roseGold" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#E8D3CE"/>
+      <stop offset="50%" stop-color="#D4A398"/>
+      <stop offset="100%" stop-color="#C59287"/>
+    </linearGradient>
+    <linearGradient id="sageGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#A3B19B"/>
+      <stop offset="100%" stop-color="#7B8D7C"/>
+    </linearGradient>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#2C2A29" flood-opacity="0.12"/>
+    </filter>
+  </defs>
+  
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Great+Vibes&amp;display=swap');
+    .cursive-text {
+      font-family: 'Great Vibes', 'Brush Script MT', 'Alex Brush', cursive, serif;
+      font-style: normal;
+    }
+  </style>
+  
+  <!-- Outer Badge Circle -->
+  <circle cx="256" cy="256" r="236" fill="url(#bgGrad)" stroke="url(#roseGold)" stroke-width="10" filter="url(#shadow)"/>
+  
+  <!-- Botanical Leaf Accents -->
+  <path d="M140 180 C110 220 110 280 140 330 C120 310 115 270 128 230 Z" fill="url(#sageGrad)" opacity="0.75"/>
+  <path d="M372 180 C402 220 402 280 372 330 C392 310 397 270 384 230 Z" fill="url(#sageGrad)" opacity="0.75"/>
+  
+  <!-- Heart Background Overlay -->
+  <path d="M256 365 C240 350 175 295 175 225 C175 190 200 162 238 162 C248 162 256 168 256 168 C256 168 264 162 274 162 C312 162 337 190 337 225 C337 295 272 350 256 365 Z" fill="url(#roseGold)" opacity="0.22" stroke="url(#roseGold)" stroke-width="5"/>
+
+  <!-- Monogram Cursive Text M & G -->
+  <text x="256" y="300" class="cursive-text" font-size="185" font-weight="normal" fill="#2C2A29" text-anchor="middle">M &amp; G</text>
+</svg>

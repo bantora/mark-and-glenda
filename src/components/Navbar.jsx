@@ -36,9 +36,9 @@ export default function Navbar({ onOpenRSVP }) {
     <header className={`navbar-header ${isScrolled ? 'scrolled' : ''}`}>
       <div className="navbar-container">
         {/* Logo / Brand */}
-        <a href="#" className="navbar-brand" aria-label="Mark and Glenda Home">
+        <a href="#" className="navbar-brand font-cursive" aria-label="Mark and Glenda Home">
           <span className="brand-letter">M</span>
-          <Heart className="brand-heart-icon" size={18} fill="currentColor" />
+          <Heart className="brand-heart-icon" size={16} fill="currentColor" />
           <span className="brand-letter">G</span>
         </a>
 
