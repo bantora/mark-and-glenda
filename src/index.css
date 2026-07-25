@@ -568,7 +568,52 @@ h1, h2, h3, h4, .font-serif, .font-cursive, .font-heading {
   gap: 2rem;
 }
 
-.schedule-card, .details-card {
+.schedule-card {
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.card-image-wrapper {
+  position: relative;
+  width: 100%;
+  height: 220px;
+  overflow: hidden;
+  background-color: var(--accent-blush-light);
+}
+
+.card-venue-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.schedule-card:hover .card-venue-img {
+  transform: scale(1.06);
+}
+
+.overlay-icon {
+  margin: -32px auto 0 auto !important;
+  position: relative;
+  z-index: 5;
+  box-shadow: 0 6px 20px rgba(44, 42, 41, 0.12);
+  border: 4px solid #ffffff;
+}
+
+.card-content-body {
+  padding: 1.2rem 2rem 2.5rem 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.details-card {
   padding: 2.5rem 2rem;
   display: flex;
   flex-direction: column;

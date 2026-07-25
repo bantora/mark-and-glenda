@@ -61,8 +61,8 @@ The objective of this project is to build a modern, high-end, responsive wedding
    * Primary call-to-action button ("RSVP Now")
 
 3. **Event Schedule Section**:
-   * **Ceremony**: 1:30 PM (Arrival at 1:00 PM) @ Minor Basilica of the National Shrine of Our Lady of Mt. Carmel
-   * **Reception**: Oasis Manila
+   * **Ceremony**: 1:30 PM (Arrival at 1:00 PM) @ Minor Basilica of the National Shrine of Our Lady of Mt. Carmel (with venue photography header image `public/venues/mt-carmel-church.jpg`)
+   * **Reception**: Oasis Manila (with venue photography header image `public/venues/oasis-manila.jpg`)
 
 4. **Streamlined RSVP Form**:
    * Guest Full Name

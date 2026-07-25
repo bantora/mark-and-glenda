@@ -18,60 +18,78 @@ export default function Schedule() {
         <div className="schedule-grid">
           {/* Ceremony Card */}
           <div className="glass-card schedule-card">
-            <div className="card-icon-wrapper ceremony-icon">
-              <Church size={32} />
+            <div className="card-image-wrapper">
+              <img
+                src="/venues/mt-carmel-church.jpg"
+                alt="Minor Basilica of Our Lady of Mt. Carmel"
+                className="card-venue-img"
+              />
             </div>
-            <h3 className="card-title font-serif">Wedding Ceremony</h3>
-            
-            <div className="card-time-badge">
-              <Clock size={16} />
-              <span>Guest Arrival 1:00 PM | Ceremony 1:30 PM</span>
+            <div className="card-icon-wrapper ceremony-icon overlay-icon">
+              <Church size={28} />
             </div>
+            <div className="card-content-body">
+              <h3 className="card-title font-serif">Wedding Ceremony</h3>
+              
+              <div className="card-time-badge">
+                <Clock size={16} />
+                <span>Guest Arrival 1:00 PM | Ceremony 1:30 PM</span>
+              </div>
 
-            <div className="card-location">
-              <MapPin size={18} style={{ flexShrink: 0, marginTop: '3px' }} />
-              <span>Minor Basilica of the National Shrine of Our Lady of Mt. Carmel</span>
-            </div>
+              <div className="card-location">
+                <MapPin size={18} style={{ flexShrink: 0, marginTop: '3px' }} />
+                <span>Minor Basilica of the National Shrine of Our Lady of Mt. Carmel</span>
+              </div>
 
-            <a
-              href={ceremonyMapsUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="btn-map-link"
-              aria-label="Google Maps directions for Ceremony"
-            >
-              <span>Google Maps</span>
-              <ExternalLink size={14} />
-            </a>
+              <a
+                href={ceremonyMapsUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn-map-link"
+                aria-label="Google Maps directions for Ceremony"
+              >
+                <span>Google Maps</span>
+                <ExternalLink size={14} />
+              </a>
+            </div>
           </div>
 
           {/* Reception Card */}
           <div className="glass-card schedule-card">
-            <div className="card-icon-wrapper reception-icon">
-              <UtensilsCrossed size={32} />
+            <div className="card-image-wrapper">
+              <img
+                src="/venues/oasis-manila.jpg"
+                alt="Oasis Manila"
+                className="card-venue-img"
+              />
             </div>
-            <h3 className="card-title font-serif">Wedding Reception</h3>
-
-            <div className="card-time-badge">
-              <Clock size={16} />
-              <span>To Follow Immediately</span>
+            <div className="card-icon-wrapper reception-icon overlay-icon">
+              <UtensilsCrossed size={28} />
             </div>
+            <div className="card-content-body">
+              <h3 className="card-title font-serif">Wedding Reception</h3>
 
-            <div className="card-location">
-              <MapPin size={18} style={{ flexShrink: 0, marginTop: '3px' }} />
-              <span>Oasis Manila</span>
+              <div className="card-time-badge">
+                <Clock size={16} />
+                <span>To Follow Immediately</span>
+              </div>
+
+              <div className="card-location">
+                <MapPin size={18} style={{ flexShrink: 0, marginTop: '3px' }} />
+                <span>Oasis Manila</span>
+              </div>
+
+              <a
+                href={receptionMapsUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn-map-link"
+                aria-label="Google Maps directions for Reception"
+              >
+                <span>Google Maps</span>
+                <ExternalLink size={14} />
+              </a>
             </div>
-
-            <a
-              href={receptionMapsUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="btn-map-link"
-              aria-label="Google Maps directions for Reception"
-            >
-              <span>Google Maps</span>
-              <ExternalLink size={14} />
-            </a>
           </div>
         </div>
       </section>
