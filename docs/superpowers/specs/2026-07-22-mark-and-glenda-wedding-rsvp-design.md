@@ -48,7 +48,7 @@ The objective of this project is to build a modern, high-end, responsive wedding
 
 1. **Glassmorphic Navigation Bar**:
    * Brand initials (`M & G`) styled in cursive script
-   * Navigation links (*Schedule, Details, Gallery, Gifts*) styled in cursive typography (`Great Vibes`)
+   * Navigation links (*Schedule, Details, Gifts*) styled in cursive typography (`Great Vibes`)
    * Prominent `RSVP` Action Button
 
 2. **Hero Section**:
@@ -69,10 +69,7 @@ The objective of this project is to build a modern, high-end, responsive wedding
    * Guest Count & +1 Name (if attending)
    * Warm Wishes / Personal Note for Mark & Glenda
 
-5. **Photo Gallery**:
-   * Elegant photo grid with click-to-enlarge lightbox modal
-
-6. **Wishing Well Section**:
+5. **Wishing Well Section**:
    * Beautifully formatted monetary contribution note as requested
 
 7. **Host Admin Dashboard (Password Protected)**:

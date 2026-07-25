@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import Schedule from './components/Schedule';
-import Gallery from './components/Gallery';
 import WishingWell from './components/WishingWell';
 import FAQ from './components/FAQ';
 import Footer from './components/Footer';
@@ -28,7 +27,6 @@ export default function App() {
       <main className="main-content">
         <Hero onOpenRSVP={handleOpenRSVP} />
         <Schedule />
-        <Gallery />
         <WishingWell />
         <FAQ />
       </main>

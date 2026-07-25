@@ -20,7 +20,6 @@ export default function Navbar({ onOpenRSVP }) {
   const navLinks = [
     { name: 'Schedule', href: '#schedule' },
     { name: 'Details', href: '#details' },
-    { name: 'Gallery', href: '#gallery' },
     { name: 'Gifts', href: '#gifts' },
   ];
 
