@@ -16,7 +16,7 @@ export default function WishingWell() {
             <Gift size={36} className="wishing-well-icon" />
           </div>
 
-          <p className="wishing-well-quote font-serif">
+          <p className="wishing-well-quote">
             "The best gift is celebrating with you. If you wish to honor us with something more, monetary contributions toward our future together would be greatly appreciated."
           </p>
 
