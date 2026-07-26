@@ -117,22 +117,4 @@ export async function handleRequest(request, env) {
   return new Response('Not found', { status: 404, headers: corsHeaders });
 }
 
-// Export default Worker handler
-export default {
-  async fetch(request, env, ctx) {
-    return handleRequest(request, env);
-  },
-};
 
-// Also export Cloudflare Pages Functions style handlers for compatibility
-export async function onRequest(context) {
-  return handleRequest(context.request, context.env);
-}
-
-export async function onRequestPost(context) {
-  return handleRequest(context.request, context.env);
-}
-
-export async function onRequestGet(context) {
-  return handleRequest(context.request, context.env);
-}
