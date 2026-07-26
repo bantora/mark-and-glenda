@@ -76,7 +76,7 @@ body {
   object-fit: cover;
   object-position: center 25%;
   filter: brightness(0.92) saturate(1.05);
-  opacity: 0.35;
+  opacity: 0.9;
   transition: opacity 0.4s ease;
 }
 
@@ -677,19 +677,24 @@ h1, h2, h3, h4, .font-serif, .font-cursive, .font-heading {
 }
 
 .section-subtitle {
-  color: var(--accent-blush);
-  font-size: 0.85rem;
-  font-weight: 600;
-  letter-spacing: 2px;
+  color: var(--mocha-main);
+  font-family: var(--font-sans);
+  font-size: 0.9rem;
+  font-weight: 700;
+  letter-spacing: 2.5px;
   text-transform: uppercase;
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.4rem;
+  text-shadow: 0 1px 6px rgba(255, 255, 255, 0.95), 0 0 12px rgba(250, 246, 240, 0.9);
 }
 
 .section-title {
-  font-size: clamp(2rem, 5vw, 3rem);
-  color: var(--text-main);
+  font-family: var(--font-cursive);
+  font-size: clamp(2.4rem, 5.5vw, 3.5rem);
+  color: var(--mocha-dark);
   font-weight: 400;
+  line-height: 1.2;
   margin-bottom: 0.75rem;
+  text-shadow: 0 2px 14px rgba(255, 255, 255, 0.95), 0 0 20px rgba(250, 246, 240, 0.9);
 }
 
 .section-divider {
