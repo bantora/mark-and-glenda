@@ -84,8 +84,8 @@ body {
   position: absolute;
   inset: 0;
   background: 
-    radial-gradient(ellipse at center, rgba(250, 246, 240, 0.35) 20%, rgba(250, 246, 240, 0.75) 75%, rgba(250, 246, 240, 0.95) 100%),
-    linear-gradient(180deg, rgba(250, 246, 240, 0.4) 0%, rgba(250, 246, 240, 0.2) 50%, rgba(250, 246, 240, 0.6) 100%);
+    radial-gradient(ellipse at center, rgba(250, 246, 240, 0.45) 15%, rgba(250, 246, 240, 0.72) 65%, rgba(250, 246, 240, 0.92) 100%),
+    linear-gradient(180deg, rgba(250, 246, 240, 0.55) 0%, rgba(250, 246, 240, 0.35) 50%, rgba(250, 246, 240, 0.75) 100%);
 }
 
 @media (max-width: 768px) {
@@ -99,6 +99,7 @@ h1, h2, h3, h4, .font-serif, .font-cursive, .font-heading {
   font-family: var(--font-cursive);
   font-weight: 400;
   letter-spacing: 0.5px;
+  color: var(--mocha-dark);
 }
 
 .font-serif {
@@ -672,29 +673,38 @@ h1, h2, h3, h4, .font-serif, .font-cursive, .font-heading {
 
 .section-header {
   text-align: center;
-  max-width: 600px;
+  max-width: 650px;
   margin: 0 auto 3.5rem auto;
+  position: relative;
+  z-index: 2;
+  background: none;
+  border: none;
+  box-shadow: none;
+  backdrop-filter: none;
+  padding: 0;
 }
 
 .section-subtitle {
-  color: var(--mocha-main);
-  font-family: var(--font-sans);
-  font-size: 0.9rem;
-  font-weight: 700;
-  letter-spacing: 2.5px;
-  text-transform: uppercase;
-  margin-bottom: 0.4rem;
-  text-shadow: 0 1px 6px rgba(255, 255, 255, 0.95), 0 0 12px rgba(250, 246, 240, 0.9);
+  color: #594B40 !important;
+  font-family: var(--font-sans) !important;
+  font-size: 0.85rem !important;
+  font-weight: 600 !important;
+  letter-spacing: 2.5px !important;
+  text-transform: uppercase !important;
+  margin-bottom: 0.4rem !important;
+  opacity: 1 !important;
+  text-shadow: 0 1px 6px rgba(250, 246, 240, 0.9) !important;
 }
 
 .section-title {
-  font-family: var(--font-cursive);
-  font-size: clamp(2.4rem, 5.5vw, 3.5rem);
-  color: var(--mocha-dark);
-  font-weight: 400;
-  line-height: 1.2;
-  margin-bottom: 0.75rem;
-  text-shadow: 0 2px 14px rgba(255, 255, 255, 0.95), 0 0 20px rgba(250, 246, 240, 0.9);
+  font-family: var(--font-cursive) !important;
+  font-size: clamp(2.4rem, 5.5vw, 3.5rem) !important;
+  color: #2C1A14 !important;
+  font-weight: 400 !important;
+  line-height: 1.25 !important;
+  margin-bottom: 0.75rem !important;
+  opacity: 1 !important;
+  text-shadow: 0 1px 8px rgba(250, 246, 240, 0.9) !important;
 }
 
 .section-divider {
@@ -845,10 +855,12 @@ h1, h2, h3, h4, .font-serif, .font-cursive, .font-heading {
 }
 
 .card-title {
-  font-size: 1.75rem;
-  color: var(--text-main);
-  margin-bottom: 1rem;
-  font-weight: 500;
+  font-family: var(--font-cursive);
+  font-size: clamp(2rem, 4vw, 2.5rem);
+  color: var(--mocha-dark);
+  margin-bottom: 0.75rem;
+  font-weight: 400;
+  line-height: 1.2;
 }
 
 .card-time-badge {
