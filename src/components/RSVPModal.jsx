@@ -187,7 +187,7 @@ export default function RSVPModal({ isOpen, onClose }) {
               </span>
               <h2 className="rsvp-modal-title font-serif">Celebrate With Us</h2>
               <p className="rsvp-modal-subtitle">
-                Please respond by November 1, 2026 to help us prepare for our big day.
+                Please respond by November 14, 2026 to help us prepare for our big day.
               </p>
               <div className="section-divider"></div>
             </div>
