@@ -11,7 +11,7 @@ export default function Schedule() {
       {/* Schedule Section */}
       <section id="schedule" className="schedule-section">
         <div className="section-header">
-          <p className="section-subtitle">When & Where</p>
+          <p className="section-subtitle">Monday, December 14, 2026</p>
           <h2 className="section-title font-serif">Event Schedule</h2>
           <div className="section-divider"></div>
         </div>

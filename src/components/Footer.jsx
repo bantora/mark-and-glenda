@@ -21,7 +21,7 @@ export default function Footer({ onOpenRSVP, onOpenAdmin }) {
           <div className="footer-meta">
             <span className="meta-item">
               <Calendar size={14} className="meta-icon" />
-              December 14, 2026
+              Monday, December 14, 2026
             </span>
             <span className="meta-dot">•</span>
             <span className="meta-item">

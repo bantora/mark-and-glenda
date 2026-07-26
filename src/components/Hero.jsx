@@ -27,7 +27,7 @@ export default function Hero({ onOpenRSVP }) {
         <div className="hero-meta">
           <div className="meta-pill">
             <Calendar size={16} className="pill-icon" />
-            <span>December 14, 2026</span>
+            <span>Monday, December 14, 2026</span>
           </div>
           <div className="meta-divider">•</div>
           <div className="meta-pill">
