@@ -1,7 +1,8 @@
-import React from 'react';
-import { Church, UtensilsCrossed, Clock, MapPin, ExternalLink, Shirt, Car } from 'lucide-react';
+import React, { useState } from 'react';
+import { Church, UtensilsCrossed, Clock, MapPin, ExternalLink, Shirt, Car, Maximize2, X } from 'lucide-react';
 
 export default function Schedule() {
+  const [activeImage, setActiveImage] = useState(null);
   const ceremonyMapsUrl = "https://maps.google.com/?q=Minor+Basilica+of+the+National+Shrine+of+Our+Lady+of+Mt.+Carmel+Quezon+City";
   const receptionMapsUrl = "https://maps.google.com/?q=Oasis+Manila+Aurora+Blvd+Quezon+City";
 
@@ -18,12 +19,28 @@ export default function Schedule() {
         <div className="schedule-grid">
           {/* Ceremony Card */}
           <div className="glass-card schedule-card">
-            <div className="card-image-wrapper">
+            <div 
+              className="card-image-wrapper" 
+              onClick={() => setActiveImage({
+                src: "/venues/mt-carmel-church.jpg",
+                title: "Minor Basilica of Our Lady of Mt. Carmel"
+              })}
+              title="Click to view full picture"
+            >
+              <img
+                src="/venues/ceremony-painted-bg.jpg"
+                alt="Painted watercolor canvas background"
+                className="card-venue-painted-bg"
+              />
               <img
                 src="/venues/mt-carmel-church.jpg"
                 alt="Minor Basilica of Our Lady of Mt. Carmel"
                 className="card-venue-img"
               />
+              <div className="card-image-expand-badge">
+                <Maximize2 size={12} />
+                <span>View Full Photo</span>
+              </div>
             </div>
             <div className="card-icon-wrapper ceremony-icon overlay-icon">
               <Church size={28} />
@@ -56,12 +73,28 @@ export default function Schedule() {
 
           {/* Reception Card */}
           <div className="glass-card schedule-card">
-            <div className="card-image-wrapper">
+            <div 
+              className="card-image-wrapper"
+              onClick={() => setActiveImage({
+                src: "/venues/oasis-manila.jpg",
+                title: "Oasis Manila"
+              })}
+              title="Click to view full picture"
+            >
+              <img
+                src="/venues/ceremony-painted-bg.jpg"
+                alt="Painted watercolor canvas background"
+                className="card-venue-painted-bg"
+              />
               <img
                 src="/venues/oasis-manila.jpg"
                 alt="Oasis Manila"
                 className="card-venue-img"
               />
+              <div className="card-image-expand-badge">
+                <Maximize2 size={12} />
+                <span>View Full Photo</span>
+              </div>
             </div>
             <div className="card-icon-wrapper reception-icon overlay-icon">
               <UtensilsCrossed size={28} />
@@ -93,6 +126,23 @@ export default function Schedule() {
           </div>
         </div>
       </section>
+
+      {/* Lightbox Modal */}
+      {activeImage && (
+        <div className="lightbox-modal-overlay" onClick={() => setActiveImage(null)}>
+          <div className="lightbox-modal-content" onClick={(e) => e.stopPropagation()}>
+            <button 
+              className="lightbox-close-btn" 
+              onClick={() => setActiveImage(null)}
+              aria-label="Close Lightbox"
+            >
+              <X size={20} />
+            </button>
+            <img src={activeImage.src} alt={activeImage.title} className="lightbox-img" />
+            <p className="lightbox-caption font-serif">{activeImage.title}</p>
+          </div>
+        </div>
+      )}
 
       {/* Venue & Event Details Section */}
       <section id="details" className="details-section">
