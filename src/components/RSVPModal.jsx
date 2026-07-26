@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { X, CheckCircle, Heart, Loader2, Sparkles, User, Mail, MessageSquare } from 'lucide-react';
+import { X, CheckCircle, Heart, Loader2, Sparkles, User, Mail, MessageSquare, Calendar, Download, ExternalLink } from 'lucide-react';
 import { submitRSVP } from '../services/api';
 
 export default function RSVPModal({ isOpen, onClose }) {
@@ -36,6 +36,41 @@ export default function RSVPModal({ isOpen, onClose }) {
       resetForm();
     }, 300);
   };
+
+  const handleDownloadICS = () => {
+    const title = "Mark & Glenda Wedding Ceremony & Reception";
+    const description = "Join Mark & Glenda as they exchange vows and celebrate their wedding! Ceremony at Mt. Carmel Shrine (1:30 PM) followed by Reception at Oasis Manila.";
+    const location = "Minor Basilica of Our Lady of Mt. Carmel & Oasis Manila, Quezon City";
+    const startDate = "20261214T133000";
+    const endDate = "20261214T200000";
+
+    const icsContent = [
+      'BEGIN:VCALENDAR',
+      'VERSION:2.0',
+      'PRODID:-//Mark & Glenda Wedding//EN',
+      'CALSCALE:GREGORIAN',
+      'METHOD:PUBLISH',
+      'BEGIN:VEVENT',
+      `SUMMARY:${title}`,
+      `DESCRIPTION:${description}`,
+      `LOCATION:${location}`,
+      `DTSTART:${startDate}`,
+      `DTEND:${endDate}`,
+      'STATUS:CONFIRMED',
+      'END:VEVENT',
+      'END:VCALENDAR'
+    ].join('\r\n');
+
+    const blob = new Blob([icsContent], { type: 'text/calendar;charset=utf-8' });
+    const link = document.createElement('a');
+    link.href = window.URL.createObjectURL(blob);
+    link.setAttribute('download', 'Mark_and_Glenda_Wedding.ics');
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
+  const googleCalendarUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent("Mark & Glenda's Wedding")}&dates=20261214T133000/20261214T200000&details=${encodeURIComponent("Join Mark & Glenda as they celebrate their special day! Ceremony starts at 1:30 PM at Mt. Carmel Shrine, followed by Reception at Oasis Manila.")}&location=${encodeURIComponent("Minor Basilica of Our Lady of Mt. Carmel, Quezon City")}`;
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -105,6 +140,32 @@ export default function RSVPModal({ isOpen, onClose }) {
             <p className="rsvp-success-subtext">
               Mark & Glenda look forward to celebrating this special day with you!
             </p>
+
+            {/* Add to Calendar Box */}
+            <div className="rsvp-calendar-box">
+              <p className="calendar-box-title font-serif">
+                <Calendar size={18} className="calendar-icon" /> Save the Date to Your Calendar
+              </p>
+              <div className="calendar-btn-group">
+                <a
+                  href={googleCalendarUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn-calendar-link google-cal"
+                >
+                  <span>Google Calendar</span>
+                  <ExternalLink size={14} />
+                </a>
+                <button
+                  type="button"
+                  className="btn-calendar-link ics-dl"
+                  onClick={handleDownloadICS}
+                >
+                  <Download size={14} />
+                  <span>Download .ICS (Apple / Outlook)</span>
+                </button>
+              </div>
+            </div>
 
             <div className="rsvp-success-heart">
               <Heart size={22} fill="currentColor" />

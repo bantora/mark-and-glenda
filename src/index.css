@@ -1610,8 +1610,85 @@ h1, h2, h3, h4, .font-serif, .font-cursive, .font-heading {
   font-size: 0.95rem;
   color: var(--text-muted);
   max-width: 380px;
-  margin-bottom: 1.5rem;
+  margin-bottom: 1.25rem;
   line-height: 1.6;
+}
+
+.rsvp-calendar-box {
+  width: 100%;
+  max-width: 420px;
+  background: var(--accent-blush-light);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 1.25rem 1rem;
+  margin-bottom: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.calendar-box-title {
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--text-main);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.calendar-icon {
+  color: var(--accent-blush);
+}
+
+.calendar-btn-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  justify-content: center;
+  width: 100%;
+}
+
+.btn-calendar-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  padding: 0.55rem 1rem;
+  border-radius: 50px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  border: 1px solid transparent;
+}
+
+.btn-calendar-link.google-cal {
+  background: #ffffff;
+  color: var(--text-main);
+  border-color: var(--border-color);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+}
+
+.btn-calendar-link.google-cal:hover {
+  background: var(--accent-blush);
+  color: #ffffff;
+  border-color: var(--accent-blush);
+  transform: translateY(-2px);
+}
+
+.btn-calendar-link.ics-dl {
+  background: var(--accent-sage-light);
+  color: var(--accent-sage);
+  border-color: rgba(123, 141, 124, 0.3);
+}
+
+.btn-calendar-link.ics-dl:hover {
+  background: var(--accent-sage);
+  color: #ffffff;
+  border-color: var(--accent-sage);
+  transform: translateY(-2px);
 }
 
 .rsvp-success-heart {
@@ -2314,4 +2391,25 @@ h1, h2, h3, h4, .font-serif, .font-cursive, .font-heading {
 .lightbox-close-btn:hover {
   background: rgba(255, 255, 255, 0.4);
   transform: scale(1.1);
+}
+
+.btn-delete-rsvp {
+  background: #fef2f2;
+  color: #dc2626;
+  border: 1px solid rgba(220, 38, 38, 0.25);
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-delete-rsvp:hover {
+  background: #dc2626;
+  color: #ffffff;
+  border-color: #dc2626;
+  transform: scale(1.08);
 }

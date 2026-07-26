@@ -87,6 +87,27 @@ export async function handleRequest(request, env) {
     } catch (err) {
       return jsonResponse({ success: false, error: err.message }, 500);
     }
+  // POST /api/admin/rsvp/delete - Delete an RSVP entry
+  if (request.method === 'POST' && url.pathname === '/api/admin/rsvp/delete') {
+    try {
+      const authHeader = request.headers.get('Authorization');
+      if (!authHeader || !authHeader.includes('Bearer authed')) {
+        return jsonResponse({ success: false, error: 'Unauthorized' }, 401);
+      }
+
+      const body = await request.json();
+      if (!body.id) {
+        return jsonResponse({ success: false, error: 'RSVP ID is required' }, 400);
+      }
+
+      if (env && env.DB) {
+        await env.DB.prepare(`DELETE FROM rsvps WHERE id = ?`).bind(body.id).run();
+      }
+
+      return jsonResponse({ success: true, deletedId: body.id });
+    } catch (err) {
+      return jsonResponse({ success: false, error: err.message }, 500);
+    }
   }
 
   if (env && env.ASSETS) {

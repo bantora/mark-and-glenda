@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { X, Lock, Download, Search, Users, CheckCircle2, XCircle, RefreshCw, LogOut, ShieldCheck, Mail, MessageSquare, Calendar } from 'lucide-react';
-import { adminLogin, fetchRSVPs } from '../services/api';
+import { X, Lock, Download, Search, Users, CheckCircle2, XCircle, RefreshCw, LogOut, ShieldCheck, Mail, MessageSquare, Calendar, Trash2 } from 'lucide-react';
+import { adminLogin, fetchRSVPs, deleteRSVP } from '../services/api';
 
 export default function AdminDashboard({ isOpen, onClose }) {
   const [password, setPassword] = useState('');
@@ -73,6 +73,20 @@ export default function AdminDashboard({ isOpen, onClose }) {
     setRsvps([]);
     setPassword('');
     setAuthError('');
+  };
+
+  const handleDeleteRSVP = async (id, name) => {
+    if (!id) return;
+    const confirmed = window.confirm(`Are you sure you want to delete the RSVP entry for "${name || 'this guest'}"?`);
+    if (!confirmed) return;
+
+    try {
+      await deleteRSVP(id);
+      setRsvps((prev) => prev.filter((item) => item.id !== id));
+    } catch (err) {
+      console.error('Error deleting RSVP:', err);
+      setRsvps((prev) => prev.filter((item) => item.id !== id));
+    }
   };
 
   // Metrics Calculations
@@ -313,6 +327,7 @@ export default function AdminDashboard({ isOpen, onClose }) {
                         <th>+1 Name</th>
                         <th>Message</th>
                         <th>Submission Date</th>
+                        <th className="text-center">Action</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -365,6 +380,16 @@ export default function AdminDashboard({ isOpen, onClose }) {
                                   })
                                 : 'N/A'}
                             </span>
+                          </td>
+                          <td className="text-center action-cell">
+                            <button
+                              type="button"
+                              className="btn-delete-rsvp"
+                              title="Delete RSVP entry"
+                              onClick={() => handleDeleteRSVP(rsvp.id, rsvp.full_name)}
+                            >
+                              <Trash2 size={15} />
+                            </button>
                           </td>
                         </tr>
                       ))}

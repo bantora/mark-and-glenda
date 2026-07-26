@@ -67,3 +67,35 @@ export async function fetchRSVPs() {
 
   return JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY) || '[]');
 }
+
+export async function deleteRSVP(id) {
+  try {
+    const token = sessionStorage.getItem('admin_token');
+    const res = await fetch('/api/admin/rsvp/delete', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      },
+      body: JSON.stringify({ id })
+    });
+    if (res.ok) {
+      const data = await res.json();
+      if (data.success) {
+        // Also remove from localStorage if present
+        const existing = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY) || '[]');
+        const updated = existing.filter((item) => item.id !== id);
+        localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(updated));
+        return { success: true };
+      }
+    }
+  } catch (err) {
+    console.warn('API delete error, falling back to local storage delete:', err);
+  }
+
+  // Fallback to local storage deletion
+  const existing = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY) || '[]');
+  const updated = existing.filter((item) => item.id !== id);
+  localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(updated));
+  return { success: true };
+}
