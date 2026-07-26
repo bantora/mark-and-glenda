@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { X, CheckCircle, Heart, Loader2, Sparkles, User, Mail, Users, MessageSquare } from 'lucide-react';
+import { X, CheckCircle, Heart, Loader2, Sparkles, User, Mail, MessageSquare } from 'lucide-react';
 import { submitRSVP } from '../services/api';
 
 export default function RSVPModal({ isOpen, onClose }) {
@@ -200,53 +200,6 @@ export default function RSVPModal({ isOpen, onClose }) {
                   </button>
                 </div>
               </div>
-
-              {/* Conditional Fields if Attending */}
-              {formData.attending && (
-                <div className="rsvp-attending-fields">
-                  <div className="rsvp-form-row">
-                    {/* Guest Count */}
-                    <div className="rsvp-form-group flex-1">
-                      <label className="rsvp-label" htmlFor="guest_count">
-                        Total Guests (1-5)
-                      </label>
-                      <div className="rsvp-input-wrapper">
-                        <Users size={18} className="rsvp-input-icon" />
-                        <select
-                          id="guest_count"
-                          className="rsvp-select"
-                          value={formData.guest_count}
-                          onChange={(e) => setFormData({ ...formData, guest_count: parseInt(e.target.value, 10) || 1 })}
-                        >
-                          <option value={1}>1 Guest (Just Me)</option>
-                          <option value={2}>2 Guests</option>
-                          <option value={3}>3 Guests</option>
-                          <option value={4}>4 Guests</option>
-                          <option value={5}>5 Guests</option>
-                        </select>
-                      </div>
-                    </div>
-
-                    {/* Plus One Name */}
-                    <div className="rsvp-form-group flex-1">
-                      <label className="rsvp-label" htmlFor="plus_one_name">
-                        +1 Guest Name (Optional)
-                      </label>
-                      <div className="rsvp-input-wrapper">
-                        <User size={18} className="rsvp-input-icon" />
-                        <input
-                          id="plus_one_name"
-                          type="text"
-                          className="rsvp-input"
-                          placeholder="Companion's Name"
-                          value={formData.plus_one_name}
-                          onChange={(e) => setFormData({ ...formData, plus_one_name: e.target.value })}
-                        />
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              )}
 
               {/* Message for Couple */}
               <div className="rsvp-form-group">
