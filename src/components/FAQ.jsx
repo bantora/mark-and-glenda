@@ -8,7 +8,7 @@ const faqData = [
   },
   {
     question: "What is the dress code for the event?",
-    answer: "The dress code is Formal / Black Tie Optional. Gentlemen are encouraged to wear formal suits or Barong Tagalog, and ladies in floor-length gowns or elegant cocktail dresses, matching our soft blush and sage color palette."
+    answer: "We invite you to celebrate in semi-formal cocktail attire, styled in neutral earth tones and modern traditional Filipino wear."
   },
   {
     question: "Is parking available at both venues?",

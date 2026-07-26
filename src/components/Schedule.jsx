@@ -111,17 +111,17 @@ export default function Schedule() {
             <h3 className="card-title font-serif">Dress Code Guidance</h3>
             
             <div className="card-time-badge">
-              <span>Formal / Black Tie Optional</span>
+              <span>Semi-Formal Cocktail</span>
             </div>
 
             <p className="details-content">
-              We request our guests to dress in formal attire matching our soft romantic blush and sage palette. Gentlemen are encouraged to wear formal suits or Barong Tagalog, and ladies in floor-length gowns or elegant cocktail dresses.
+              We invite you to celebrate in semi-formal cocktail attire, styled in neutral earth tones and modern traditional Filipino wear.
             </p>
 
             <div className="details-tag-list">
-              <span className="details-tag">Barong Tagalog</span>
-              <span className="details-tag">Formal Suits</span>
-              <span className="details-tag">Cocktail & Gowns</span>
+              <span className="details-tag">Semi-Formal Cocktail</span>
+              <span className="details-tag">Neutral Earth Tones</span>
+              <span className="details-tag">Modern Traditional Filipino Wear</span>
             </div>
           </div>
 
