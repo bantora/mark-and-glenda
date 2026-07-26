@@ -20,6 +20,16 @@ export default function App() {
 
   return (
     <div className="wedding-app">
+      {/* Site-Wide Fixed Background Image */}
+      <div className="site-global-bg-wrapper">
+        <img
+          src="/photos/XH1S0470.jpg"
+          alt="Mark & Glenda Wedding Background"
+          className="site-global-bg-img"
+        />
+        <div className="site-global-bg-overlay"></div>
+      </div>
+
       {/* Fixed Header / Navigation */}
       <Navbar onOpenRSVP={handleOpenRSVP} />
 

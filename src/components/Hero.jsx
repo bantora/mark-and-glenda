@@ -5,6 +5,8 @@ import Countdown from './Countdown';
 export default function Hero({ onOpenRSVP }) {
   return (
     <section className="hero-section" id="hero">
+
+
       <div className="hero-background-decor">
         <div className="decor-blob blob-1"></div>
         <div className="decor-blob blob-2"></div>
@@ -36,7 +38,18 @@ export default function Hero({ onOpenRSVP }) {
           </div>
         </div>
 
-        {/* Countdown Timer Embed */}
+        {/* Featured Home Page Couple Portrait Window */}
+        <div className="hero-portrait-container">
+          <div className="hero-portrait-frame">
+            <img
+              src="/photos/XH1S0300.jpg"
+              alt="Mark & Glenda Engagement Portrait"
+              className="hero-portrait-img"
+            />
+          </div>
+        </div>
+
+        {/* Overlapping Countdown Timer Embed */}
         <div className="hero-countdown-wrapper">
           <Countdown />
         </div>
