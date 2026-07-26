@@ -1,25 +1,43 @@
 :root {
-  --bg-main: #FAF7F2;
-  --bg-card: rgba(255, 255, 255, 0.85);
-  --bg-card-hover: rgba(255, 255, 255, 0.95);
-  --text-main: #2C2A29;
-  --text-muted: #66605C;
-  --accent-blush: #D4A398;
-  --accent-blush-hover: #C59287;
-  --accent-blush-light: #F4EBE8;
-  --accent-sage: #7B8D7C;
-  --accent-sage-light: #EBF0EC;
-  --accent-gold: #D4AF37;
-  --border-color: rgba(212, 163, 152, 0.25);
+  --bg-main: #FAF6F0;
+  --bg-card: rgba(255, 255, 255, 0.88);
+  --bg-card-hover: rgba(255, 255, 255, 0.96);
+  --text-main: #3B2F2F;
+  --text-muted: #6B5B52;
+  
+  /* Mocha / Taupe / Champagne Design Tokens */
+  --mocha-dark: #3B2F2F;
+  --mocha-main: #6F594C;
+  --mocha-hover: #5C483D;
+  --mocha-light: #F4EFEB;
+  
+  --taupe-main: #8C7A6B;
+  --taupe-hover: #7A695B;
+  --taupe-light: #EDE8E3;
+  --taupe-dark: #594B40;
+  
+  --champagne-gold: #C5A059;
+  --champagne-gold-hover: #B38E47;
+  --champagne-light: #FAF5ED;
+
+  /* Aliases mapped to Mocha / Champagne / Taupe Palette */
+  --accent-blush: #8C7A6B;
+  --accent-blush-hover: #7A695B;
+  --accent-blush-light: #F4EFEB;
+  --accent-sage: #6F594C;
+  --accent-sage-light: #EDE8E3;
+  --accent-gold: #C5A059;
+  --border-color: rgba(197, 160, 89, 0.3);
+
   --radius-sm: 8px;
   --radius-md: 16px;
   --radius-lg: 24px;
   --font-cursive: 'Great Vibes', cursive;
   --font-serif: 'Great Vibes', 'Playfair Display', cursive, serif;
   --font-sans: 'Inter', sans-serif;
-  --shadow-soft: 0 10px 30px rgba(44, 42, 41, 0.05);
-  --shadow-card: 0 15px 35px rgba(212, 163, 152, 0.12);
-  --shadow-hover: 0 20px 40px rgba(212, 163, 152, 0.25);
+  --shadow-soft: 0 10px 30px rgba(59, 47, 47, 0.05);
+  --shadow-card: 0 15px 35px rgba(197, 160, 89, 0.12);
+  --shadow-hover: 0 20px 40px rgba(140, 122, 107, 0.22);
 }
 
 * {

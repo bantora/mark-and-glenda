@@ -165,12 +165,12 @@ export default function Schedule() {
             </div>
 
             <p className="details-content">
-              We invite you to celebrate in semi-formal cocktail attire, styled in neutral earth tones and modern traditional Filipino wear.
+              We invite you to celebrate in semi-formal cocktail attire, styled in mocha, champagne, taupe earth tones, and modern traditional Filipino wear.
             </p>
 
             <div className="details-tag-list">
-              <span className="details-tag">Semi-Formal Cocktail</span>
-              <span className="details-tag">Neutral Earth Tones</span>
+              <span className="details-tag">Mocha & Taupe Tones</span>
+              <span className="details-tag">Champagne Accents</span>
               <span className="details-tag">Modern Traditional Filipino Wear</span>
             </div>
           </div>

@@ -8,7 +8,7 @@ const faqData = [
   },
   {
     question: "What is the dress code for the event?",
-    answer: "We invite you to celebrate in semi-formal cocktail attire, styled in neutral earth tones and modern traditional Filipino wear."
+    answer: "We invite you to celebrate in semi-formal cocktail attire, styled in mocha, champagne, and taupe earth tones, and modern traditional Filipino wear."
   },
   {
     question: "Is parking available at both venues?",
