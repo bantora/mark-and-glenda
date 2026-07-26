@@ -211,7 +211,7 @@ export default function AdminDashboard({ isOpen, onClose }) {
                   <input
                     type="password"
                     className="admin-input"
-                    placeholder="Enter Passphrase (markglenda2026)"
+                    placeholder="Enter Passphrase"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     autoFocus
