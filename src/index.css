@@ -1236,26 +1236,16 @@ h1, h2, h3, h4, .font-serif, .font-cursive, .font-heading {
    Wishing Well Section Styles
    ========================================================================== */
 .wishing-well-section {
-  position: relative;
-  padding: 6rem 1.5rem 8rem 1.5rem;
-  width: 100%;
+  padding: 4rem 1.5rem 3rem 1.5rem;
+  max-width: 900px;
+  margin: 0 auto;
 }
 
-.wishing-well-bg-wrapper {
-  position: sticky;
-  top: 70px;
-  height: 80vh;
-  width: 100%;
-  margin-bottom: -80vh;
-  z-index: 0;
-  overflow: hidden;
-  pointer-events: none;
-  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 18%, black 82%, transparent 100%),
-                      linear-gradient(to right, transparent 0%, black 12%, black 88%, transparent 100%);
-  -webkit-mask-composite: destination-in;
-  mask-image: linear-gradient(to bottom, transparent 0%, black 18%, black 82%, transparent 100%),
-              linear-gradient(to right, transparent 0%, black 12%, black 88%, transparent 100%);
-  mask-composite: intersect;
+.wishing-well-content {
+  position: relative;
+  z-index: 1;
+  max-width: 850px;
+  margin: 0 auto;
 }
 
 .wishing-well-bg-img {
@@ -1365,7 +1355,7 @@ h1, h2, h3, h4, .font-serif, .font-cursive, .font-heading {
    FAQ Section & Accordion Styles
    ========================================================================== */
 .faq-section {
-  padding: 3rem 1.5rem 6rem 1.5rem;
+  padding: 3rem 1.5rem 3rem 1.5rem;
   max-width: 900px;
   margin: 0 auto;
 }
@@ -1910,10 +1900,15 @@ h1, h2, h3, h4, .font-serif, .font-cursive, .font-heading {
    Footer Styles & Discreet Host Login Link
    ========================================================================== */
 .wedding-footer {
-  background: linear-gradient(180deg, rgba(250, 247, 242, 0.5) 0%, #F5EFE6 100%);
+  background: rgba(250, 246, 240, 0.94);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
   border-top: 1px solid var(--border-color);
-  padding: 4.5rem 1.5rem 2.5rem 1.5rem;
-  margin-top: 3rem;
+  padding: 4rem 1.5rem 2.5rem 1.5rem;
+  margin-top: 2rem;
+  position: relative;
+  z-index: 2;
+  box-shadow: 0 -10px 30px rgba(59, 47, 47, 0.05);
 }
 
 .footer-container {
@@ -1930,8 +1925,9 @@ h1, h2, h3, h4, .font-serif, .font-cursive, .font-heading {
 }
 
 .footer-title {
-  font-size: 2.25rem;
-  color: var(--text-main);
+  font-family: var(--font-cursive);
+  font-size: clamp(2.2rem, 5vw, 3rem);
+  color: var(--mocha-dark);
   font-weight: 400;
   margin-bottom: 0.5rem;
 }
@@ -1942,8 +1938,9 @@ h1, h2, h3, h4, .font-serif, .font-cursive, .font-heading {
   justify-content: center;
   gap: 0.75rem;
   flex-wrap: wrap;
-  color: var(--text-muted);
-  font-size: 0.9rem;
+  color: var(--mocha-main);
+  font-weight: 500;
+  font-size: 0.95rem;
 }
 
 .footer-meta .meta-item {
