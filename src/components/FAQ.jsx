@@ -20,11 +20,11 @@ const faqData = [
   },
   {
     question: "What is your gift preference?",
-    answer: "Your presence at our wedding is the greatest gift of all! If you wish to honor us with something more, monetary contributions toward our future together via our Wishing Well would be greatly appreciated."
+    answer: "If you are thinking of a gift, we would be grateful for a contribution to our wishing well at the reception. No amount is too small, and your presence on our day means everything."
   }
 ];
 
-export default function FAQ() {
+export default function FAQ({ onOpenRSVP }) {
   const [openIndex, setOpenIndex] = useState(0); // Default open first question
 
   const toggleAccordion = (index) => {
@@ -77,6 +77,16 @@ export default function FAQ() {
               </div>
             );
           })}
+        </div>
+
+        <div className="faq-cta-wrapper">
+          <button
+            type="button"
+            className="btn-hero-primary"
+            onClick={onOpenRSVP}
+          >
+            RSVP Now
+          </button>
         </div>
       </div>
     </section>

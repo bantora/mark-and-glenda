@@ -38,12 +38,11 @@ export default function App() {
         <Hero onOpenRSVP={handleOpenRSVP} />
         <Schedule />
         <WishingWell />
-        <FAQ />
+        <FAQ onOpenRSVP={handleOpenRSVP} />
       </main>
 
       {/* Footer with Discreet Host Login link */}
       <Footer
-        onOpenRSVP={handleOpenRSVP}
         onOpenAdmin={handleOpenAdmin}
       />
 

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Heart, Lock, Calendar, MapPin } from 'lucide-react';
 
-export default function Footer({ onOpenRSVP, onOpenAdmin }) {
+export default function Footer({ onOpenAdmin }) {
   const currentYear = new Date().getFullYear();
 
   const handleNavClick = (e, href) => {
@@ -41,18 +41,12 @@ export default function Footer({ onOpenRSVP, onOpenAdmin }) {
           <a href="#details" onClick={(e) => handleNavClick(e, '#details')} className="footer-link">
             Details
           </a>
-          <a href="#gallery" onClick={(e) => handleNavClick(e, '#gallery')} className="footer-link">
-            Gallery
-          </a>
           <a href="#gifts" onClick={(e) => handleNavClick(e, '#gifts')} className="footer-link">
             Wishing Well
           </a>
           <a href="#faq" onClick={(e) => handleNavClick(e, '#faq')} className="footer-link">
             FAQ
           </a>
-          <button type="button" onClick={onOpenRSVP} className="footer-rsvp-btn">
-            RSVP
-          </button>
         </div>
 
         {/* Bottom copyright & Discreet Host Login */}
