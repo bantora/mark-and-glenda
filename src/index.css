@@ -769,6 +769,11 @@ h1, h2, h3, h4, .font-serif, .font-cursive, .font-heading {
   transition: transform 0.5s ease;
 }
 
+.dress-code-card-img {
+  padding: 0.6rem;
+  /* transform: scale(1.15); */
+}
+
 .card-image-expand-badge {
   position: absolute;
   top: 12px;

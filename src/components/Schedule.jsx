@@ -154,46 +154,96 @@ export default function Schedule() {
 
         <div className="details-grid">
           {/* Dress Code Card */}
-          <div className="glass-card details-card">
-            <div className="card-icon-wrapper ceremony-icon">
-              <Shirt size={30} />
+          <div className="glass-card schedule-card">
+            <div 
+              className="card-image-wrapper" 
+              onClick={() => setActiveImage({
+                src: "/photos/dress-code.png",
+                title: "Dress Code Guidance - Semi-Formal Cocktail"
+              })}
+              title="Click to view full picture"
+            >
+              <img
+                src="/venues/ceremony-painted-bg.jpg"
+                alt="Painted watercolor canvas background"
+                className="card-venue-painted-bg"
+              />
+              <img
+                src="/photos/dress-code.png"
+                alt="Dress Code Attire Guidance - Semi-Formal Cocktail"
+                className="card-venue-img dress-code-card-img"
+              />
+              <div className="card-image-expand-badge">
+                <Maximize2 size={12} />
+                <span>View Full Photo</span>
+              </div>
             </div>
-            <h3 className="card-title font-serif">Dress Code Guidance</h3>
-            
-            <div className="card-time-badge">
-              <span>Semi-Formal Cocktail</span>
+            <div className="card-icon-wrapper ceremony-icon overlay-icon">
+              <Shirt size={28} />
             </div>
+            <div className="card-content-body">
+              <h3 className="card-title font-serif">Dress Code Guidance</h3>
+              
+              <div className="card-time-badge">
+                <span>Semi-Formal Cocktail</span>
+              </div>
 
-            <p className="details-content">
-              We invite you to celebrate in semi-formal cocktail attire, styled in mocha, champagne, taupe earth tones, and modern traditional Filipino wear.
-            </p>
+              <p className="details-content">
+                We invite you to celebrate in semi-formal cocktail attire, styled in mocha, champagne, taupe earth tones, and modern traditional Filipino wear.
+              </p>
 
-            <div className="details-tag-list">
-              <span className="details-tag">Mocha & Taupe Tones</span>
-              <span className="details-tag">Champagne Accents</span>
-              <span className="details-tag">Modern Traditional Filipino Wear</span>
+              <div className="details-tag-list">
+                <span className="details-tag">Mocha & Taupe Tones</span>
+                <span className="details-tag">Champagne Accents</span>
+                <span className="details-tag">Modern Traditional Filipino Wear</span>
+              </div>
             </div>
           </div>
 
           {/* Parking & Transportation Card */}
-          <div className="glass-card details-card">
-            <div className="card-icon-wrapper reception-icon">
-              <Car size={30} />
+          <div className="glass-card schedule-card">
+            <div 
+              className="card-image-wrapper" 
+              onClick={() => setActiveImage({
+                src: "/photos/parking-transport.jpg",
+                title: "Parking & Transportation Guidance"
+              })}
+              title="Click to view full picture"
+            >
+              <img
+                src="/venues/ceremony-painted-bg.jpg"
+                alt="Painted watercolor canvas background"
+                className="card-venue-painted-bg"
+              />
+              <img
+                src="/photos/parking-transport.jpg"
+                alt="Parking & Transportation Illustration"
+                className="card-venue-img"
+              />
+              <div className="card-image-expand-badge">
+                <Maximize2 size={12} />
+                <span>View Full Photo</span>
+              </div>
             </div>
-            <h3 className="card-title font-serif">Parking & Transport</h3>
-
-            <div className="card-time-badge">
-              <span>Venue Parking & Travel Info</span>
+            <div className="card-icon-wrapper reception-icon overlay-icon">
+              <Car size={28} />
             </div>
+            <div className="card-content-body">
+              <h3 className="card-title font-serif">Parking & Transport</h3>
 
-            <p className="details-content">
-              Dedicated guest parking is available at both Mt. Carmel Shrine and Oasis Manila. For guests traveling between locations, Oasis Manila is conveniently located approximately 10 minutes from the ceremony venue.
-            </p>
+              <div className="card-time-badge">
+                <span>Venue Parking & Travel Info</span>
+              </div>
 
-            <div className="details-tag-list">
-              <span className="details-tag">Free Guest Parking</span>
-              <span className="details-tag">10 Min Travel Time</span>
-              <span className="details-tag">Ride-Share Friendly</span>
+              <p className="details-content">
+                Dedicated guest parking is available at both Mt. Carmel Shrine and Oasis Manila. For guests traveling between locations, Oasis Manila is conveniently located approximately 10 minutes from the ceremony venue.
+              </p>
+
+              <div className="details-tag-list">
+                <span className="details-tag">Free Guest Parking</span>
+                <span className="details-tag">10 Min Travel Time</span>
+                <span className="details-tag">Ride-Share Friendly</span>
+              </div>
             </div>
           </div>
         </div>
