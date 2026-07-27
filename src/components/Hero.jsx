@@ -22,7 +22,7 @@ export default function Hero() {
 
         {/* Main Title */}
         <h1 className="hero-title font-serif">
-          Mark <span className="ampersand">&</span> Glenda
+          Mark<span className="ampersand">&</span> Glenda
         </h1>
 
         {/* Date & Location Pills */}

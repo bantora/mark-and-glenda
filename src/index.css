@@ -491,7 +491,6 @@ h1, h2, h3, h4, .font-serif, .font-cursive, .font-heading {
   line-height: 1.25;
   margin-bottom: 1.5rem;
   letter-spacing: 0.02em;
-  word-spacing: 0.15em;
 }
 
 .hero-title .ampersand {
