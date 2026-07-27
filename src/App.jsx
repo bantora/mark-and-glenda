@@ -35,7 +35,7 @@ export default function App() {
 
       {/* Main Page Content */}
       <main className="main-content">
-        <Hero onOpenRSVP={handleOpenRSVP} />
+        <Hero />
         <Schedule />
         <WishingWell />
         <FAQ onOpenRSVP={handleOpenRSVP} />

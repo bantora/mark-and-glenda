@@ -2,7 +2,7 @@ import React from 'react';
 import { Calendar, MapPin, Sparkles } from 'lucide-react';
 import Countdown from './Countdown';
 
-export default function Hero({ onOpenRSVP }) {
+export default function Hero() {
   return (
     <section className="hero-section" id="hero">
 
@@ -52,17 +52,6 @@ export default function Hero({ onOpenRSVP }) {
         {/* Overlapping Countdown Timer Embed */}
         <div className="hero-countdown-wrapper">
           <Countdown />
-        </div>
-
-        {/* Action Button */}
-        <div className="hero-cta-wrapper">
-          <button
-            type="button"
-            className="btn-hero-primary"
-            onClick={onOpenRSVP}
-          >
-            RSVP Now
-          </button>
         </div>
       </div>
     </section>
