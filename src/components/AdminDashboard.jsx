@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { X, Lock, Download, Search, Users, CheckCircle2, XCircle, RefreshCw, LogOut, ShieldCheck, Mail, MessageSquare, Calendar, Trash2 } from 'lucide-react';
+import { X, Lock, Download, Search, Users, CheckCircle2, XCircle, RefreshCw, LogOut, ShieldCheck, Mail, MessageSquare, Calendar, Trash2, Eye } from 'lucide-react';
 import { adminLogin, fetchRSVPs, deleteRSVP } from '../services/api';
 
 export default function AdminDashboard({ isOpen, onClose }) {
@@ -11,6 +11,7 @@ export default function AdminDashboard({ isOpen, onClose }) {
   const [rsvps, setRsvps] = useState([]);
   const [loading, setLoading] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
+  const [selectedMessage, setSelectedMessage] = useState(null);
 
   // Check if token already exists on mount or when modal opens
   useEffect(() => {
@@ -73,6 +74,7 @@ export default function AdminDashboard({ isOpen, onClose }) {
     setRsvps([]);
     setPassword('');
     setAuthError('');
+    setSelectedMessage(null);
   };
 
   const handleDeleteRSVP = async (id, name) => {
@@ -83,6 +85,9 @@ export default function AdminDashboard({ isOpen, onClose }) {
     try {
       await deleteRSVP(id);
       setRsvps((prev) => prev.filter((item) => item.id !== id));
+      if (selectedMessage?.id === id) {
+        setSelectedMessage(null);
+      }
     } catch (err) {
       console.error('Error deleting RSVP:', err);
       setRsvps((prev) => prev.filter((item) => item.id !== id));
@@ -99,11 +104,12 @@ export default function AdminDashboard({ isOpen, onClose }) {
   }, 0);
   const totalDeclined = rsvps.filter((item) => !item.attending).length;
 
-  // Filtered RSVPs by guest name
+  // Filtered RSVPs by guest name or email
   const filteredRSVPs = rsvps.filter((item) => {
     const nameMatch = (item.full_name || '').toLowerCase().includes(searchTerm.toLowerCase());
     const emailMatch = (item.email || '').toLowerCase().includes(searchTerm.toLowerCase());
-    return nameMatch || emailMatch;
+    const messageMatch = (item.message || '').toLowerCase().includes(searchTerm.toLowerCase());
+    return nameMatch || emailMatch || messageMatch;
   });
 
   // CSV Export Handler
@@ -152,255 +158,339 @@ export default function AdminDashboard({ isOpen, onClose }) {
   };
 
   return (
-    <div
-      className="admin-modal-overlay"
-      onClick={handleBackdropClick}
-      aria-modal="true"
-      role="dialog"
-    >
-      <div className="admin-modal-container glass-card">
-        {/* Header Bar */}
-        <div className="admin-modal-header">
-          <div className="admin-header-title">
-            <ShieldCheck size={24} className="admin-header-icon" />
-            <h2 className="font-serif">Host Admin Dashboard</h2>
-          </div>
-          <div className="admin-header-actions">
-            {isAuthenticated && (
+    <>
+      <div
+        className="admin-modal-overlay"
+        onClick={handleBackdropClick}
+        aria-modal="true"
+        role="dialog"
+      >
+        <div className="admin-modal-container glass-card">
+          {/* Header Bar */}
+          <div className="admin-modal-header">
+            <div className="admin-header-title">
+              <ShieldCheck size={24} className="admin-header-icon" />
+              <h2 className="font-serif">Host Admin Dashboard</h2>
+            </div>
+            <div className="admin-header-actions">
+              {isAuthenticated && (
+                <button
+                  type="button"
+                  className="btn-admin-logout"
+                  onClick={handleLogout}
+                  title="Log Out"
+                >
+                  <LogOut size={16} />
+                  <span>Logout</span>
+                </button>
+              )}
               <button
                 type="button"
-                className="btn-admin-logout"
-                onClick={handleLogout}
-                title="Log Out"
+                className="admin-modal-close-btn"
+                onClick={onClose}
+                aria-label="Close Dashboard"
               >
-                <LogOut size={16} />
-                <span>Logout</span>
+                <X size={20} />
               </button>
-            )}
-            <button
-              type="button"
-              className="admin-modal-close-btn"
-              onClick={onClose}
-              aria-label="Close Dashboard"
-            >
-              <X size={20} />
-            </button>
+            </div>
           </div>
-        </div>
 
-        {/* Authentication View */}
-        {!isAuthenticated ? (
-          <div className="admin-login-wrapper">
-            <div className="admin-login-card glass-card">
-              <div className="admin-lock-icon-wrapper">
-                <Lock size={32} />
-              </div>
-              <h3 className="font-serif admin-login-title">Host Authentication</h3>
-              <p className="admin-login-subtitle">
-                Please enter the host passphrase to access guest RSVPs and metrics.
-              </p>
-
-              {authError && (
-                <div className="admin-error-banner">
-                  {authError}
+          {/* Authentication View */}
+          {!isAuthenticated ? (
+            <div className="admin-login-wrapper">
+              <div className="admin-login-card glass-card">
+                <div className="admin-lock-icon-wrapper">
+                  <Lock size={32} />
                 </div>
-              )}
+                <h3 className="font-serif admin-login-title">Host Authentication</h3>
+                <p className="admin-login-subtitle">
+                  Please enter the host passphrase to access guest RSVPs and metrics.
+                </p>
 
-              <form onSubmit={handleLoginSubmit} className="admin-login-form">
-                <div className="admin-input-group">
+                {authError && (
+                  <div className="admin-error-banner">
+                    {authError}
+                  </div>
+                )}
+
+                <form onSubmit={handleLoginSubmit} className="admin-login-form">
+                  <div className="admin-input-group">
+                    <input
+                      type="password"
+                      className="admin-input"
+                      placeholder="Enter Passphrase"
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
+                      autoFocus
+                    />
+                  </div>
+                  <button
+                    type="submit"
+                    disabled={loginLoading}
+                    className="btn-rsvp-primary admin-login-btn"
+                  >
+                    {loginLoading ? 'Authenticating...' : 'Access Dashboard'}
+                  </button>
+                </form>
+              </div>
+            </div>
+          ) : (
+            /* Main Dashboard View */
+            <div className="admin-dashboard-content">
+              {/* Metrics Overview Cards */}
+              <div className="admin-metrics-grid">
+                <div className="glass-card metric-card">
+                  <div className="metric-icon-wrapper metric-icon-total">
+                    <Users size={22} />
+                  </div>
+                  <div className="metric-info">
+                    <span className="metric-label">Total RSVPs</span>
+                    <span className="metric-value font-serif">{totalRSVPs}</span>
+                  </div>
+                </div>
+
+                <div className="glass-card metric-card">
+                  <div className="metric-icon-wrapper metric-icon-attending">
+                    <CheckCircle2 size={22} />
+                  </div>
+                  <div className="metric-info">
+                    <span className="metric-label">Attending Guests</span>
+                    <span className="metric-value font-serif">{totalAttendingGuests}</span>
+                  </div>
+                </div>
+
+                <div className="glass-card metric-card">
+                  <div className="metric-icon-wrapper metric-icon-declined">
+                    <XCircle size={22} />
+                  </div>
+                  <div className="metric-info">
+                    <span className="metric-label">Declined Count</span>
+                    <span className="metric-value font-serif">{totalDeclined}</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Controls Bar: Search & Export */}
+              <div className="admin-controls-bar">
+                <div className="admin-search-wrapper">
+                  <Search size={18} className="search-icon" />
                   <input
-                    type="password"
-                    className="admin-input"
-                    placeholder="Enter Passphrase"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    autoFocus
+                    type="text"
+                    className="admin-search-input"
+                    placeholder="Search guests by name, email, or message..."
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
                   />
                 </div>
-                <button
-                  type="submit"
-                  disabled={loginLoading}
-                  className="btn-rsvp-primary admin-login-btn"
-                >
-                  {loginLoading ? 'Authenticating...' : 'Access Dashboard'}
-                </button>
-              </form>
-            </div>
-          </div>
-        ) : (
-          /* Main Dashboard View */
-          <div className="admin-dashboard-content">
-            {/* Metrics Overview Cards */}
-            <div className="admin-metrics-grid">
-              <div className="glass-card metric-card">
-                <div className="metric-icon-wrapper metric-icon-total">
-                  <Users size={22} />
-                </div>
-                <div className="metric-info">
-                  <span className="metric-label">Total RSVPs</span>
-                  <span className="metric-value font-serif">{totalRSVPs}</span>
+
+                <div className="admin-action-buttons">
+                  <button
+                    type="button"
+                    className="btn-admin-secondary"
+                    onClick={loadRSVPs}
+                    disabled={loading}
+                    title="Refresh RSVP Data"
+                  >
+                    <RefreshCw size={16} className={loading ? 'spinner-icon' : ''} />
+                    <span>Refresh</span>
+                  </button>
+
+                  <button
+                    type="button"
+                    className="btn-rsvp-primary btn-export-csv"
+                    onClick={handleExportCSV}
+                    disabled={filteredRSVPs.length === 0}
+                  >
+                    <Download size={16} />
+                    <span>Export CSV</span>
+                  </button>
                 </div>
               </div>
 
-              <div className="glass-card metric-card">
-                <div className="metric-icon-wrapper metric-icon-attending">
-                  <CheckCircle2 size={22} />
-                </div>
-                <div className="metric-info">
-                  <span className="metric-label">Attending Guests</span>
-                  <span className="metric-value font-serif">{totalAttendingGuests}</span>
-                </div>
-              </div>
-
-              <div className="glass-card metric-card">
-                <div className="metric-icon-wrapper metric-icon-declined">
-                  <XCircle size={22} />
-                </div>
-                <div className="metric-info">
-                  <span className="metric-label">Declined Count</span>
-                  <span className="metric-value font-serif">{totalDeclined}</span>
-                </div>
-              </div>
-            </div>
-
-            {/* Controls Bar: Search & Export */}
-            <div className="admin-controls-bar">
-              <div className="admin-search-wrapper">
-                <Search size={18} className="search-icon" />
-                <input
-                  type="text"
-                  className="admin-search-input"
-                  placeholder="Search guests by name or contact..."
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                />
-              </div>
-
-              <div className="admin-action-buttons">
-                <button
-                  type="button"
-                  className="btn-admin-secondary"
-                  onClick={loadRSVPs}
-                  disabled={loading}
-                  title="Refresh RSVP Data"
-                >
-                  <RefreshCw size={16} className={loading ? 'spinner-icon' : ''} />
-                  <span>Refresh</span>
-                </button>
-
-                <button
-                  type="button"
-                  className="btn-rsvp-primary btn-export-csv"
-                  onClick={handleExportCSV}
-                  disabled={filteredRSVPs.length === 0}
-                >
-                  <Download size={16} />
-                  <span>Export CSV</span>
-                </button>
-              </div>
-            </div>
-
-            {/* RSVPs Table Container */}
-            <div className="admin-table-container glass-card">
-              {loading ? (
-                <div className="admin-state-container">
-                  <RefreshCw size={28} className="spinner-icon" />
-                  <p>Loading guest responses...</p>
-                </div>
-              ) : filteredRSVPs.length === 0 ? (
-                <div className="admin-state-container">
-                  <Users size={32} className="empty-state-icon" />
-                  <p className="empty-state-title">No RSVP records found</p>
-                  <p className="empty-state-sub">
-                    {searchTerm ? 'Try adjusting your search criteria.' : 'Responses will appear here when guests submit their RSVP.'}
-                  </p>
-                </div>
-              ) : (
-                <div className="table-responsive">
-                  <table className="admin-rsvp-table">
-                    <thead>
-                      <tr>
-                        <th>Guest Name</th>
-                        <th>Contact</th>
-                        <th>Status</th>
-                        <th>Guests Count</th>
-                        <th>+1 Name</th>
-                        <th>Message</th>
-                        <th>Submission Date</th>
-                        <th className="text-center">Action</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {filteredRSVPs.map((rsvp, idx) => (
-                        <tr key={rsvp.id || idx}>
-                          <td className="font-medium guest-name-cell">
-                            {rsvp.full_name}
-                          </td>
-                          <td className="contact-cell">
-                            <span className="contact-inline">
-                              <Mail size={14} className="cell-icon" />
-                              {rsvp.email}
-                            </span>
-                          </td>
-                          <td>
-                            {rsvp.attending ? (
-                              <span className="status-badge status-attending">
-                                <CheckCircle2 size={13} /> Attending
-                              </span>
-                            ) : (
-                              <span className="status-badge status-declined">
-                                <XCircle size={13} /> Declined
-                              </span>
-                            )}
-                          </td>
-                          <td className="text-center font-medium">
-                            {rsvp.attending ? (rsvp.guest_count || 1) : 0}
-                          </td>
-                          <td className="plus-one-cell">
-                            {rsvp.plus_one_name ? rsvp.plus_one_name : <span className="muted-dash">—</span>}
-                          </td>
-                          <td className="message-cell" title={rsvp.message}>
-                            {rsvp.message ? (
-                              <span className="message-inline">
-                                <MessageSquare size={13} className="cell-icon" />
-                                {rsvp.message}
-                              </span>
-                            ) : (
-                              <span className="muted-dash">—</span>
-                            )}
-                          </td>
-                          <td className="date-cell">
-                            <span className="date-inline">
-                              <Calendar size={13} className="cell-icon" />
-                              {rsvp.created_at
-                                ? new Date(rsvp.created_at).toLocaleDateString(undefined, {
-                                    year: 'numeric',
-                                    month: 'short',
-                                    day: 'numeric'
-                                  })
-                                : 'N/A'}
-                            </span>
-                          </td>
-                          <td className="text-center action-cell">
-                            <button
-                              type="button"
-                              className="btn-delete-rsvp"
-                              title="Delete RSVP entry"
-                              onClick={() => handleDeleteRSVP(rsvp.id, rsvp.full_name)}
-                            >
-                              <Trash2 size={15} />
-                            </button>
-                          </td>
+              {/* RSVPs Table Container */}
+              <div className="admin-table-container glass-card">
+                {loading ? (
+                  <div className="admin-state-container">
+                    <RefreshCw size={28} className="spinner-icon" />
+                    <p>Loading guest responses...</p>
+                  </div>
+                ) : filteredRSVPs.length === 0 ? (
+                  <div className="admin-state-container">
+                    <Users size={32} className="empty-state-icon" />
+                    <p className="empty-state-title">No RSVP records found</p>
+                    <p className="empty-state-sub">
+                      {searchTerm ? 'Try adjusting your search criteria.' : 'Responses will appear here when guests submit their RSVP.'}
+                    </p>
+                  </div>
+                ) : (
+                  <div className="table-responsive">
+                    <table className="admin-rsvp-table">
+                      <thead>
+                        <tr>
+                          <th>Guest Name</th>
+                          <th>Contact</th>
+                          <th>Status</th>
+                          <th>Guests</th>
+                          <th>+1 Name</th>
+                          <th>Message</th>
+                          <th>Submission Date</th>
+                          <th className="text-center">Action</th>
                         </tr>
-                      ))}
-                    </tbody>
-                  </table>
+                      </thead>
+                      <tbody>
+                        {filteredRSVPs.map((rsvp, idx) => (
+                          <tr key={rsvp.id || idx}>
+                            <td className="font-medium guest-name-cell">
+                              {rsvp.full_name}
+                            </td>
+                            <td className="contact-cell">
+                              <span className="contact-inline">
+                                <Mail size={14} className="cell-icon" />
+                                {rsvp.email}
+                              </span>
+                            </td>
+                            <td>
+                              {rsvp.attending ? (
+                                <span className="status-badge status-attending">
+                                  <CheckCircle2 size={13} /> Attending
+                                </span>
+                              ) : (
+                                <span className="status-badge status-declined">
+                                  <XCircle size={13} /> Declined
+                                </span>
+                              )}
+                            </td>
+                            <td className="text-center font-medium">
+                              {rsvp.attending ? (rsvp.guest_count || 1) : 0}
+                            </td>
+                            <td className="plus-one-cell">
+                              {rsvp.plus_one_name ? rsvp.plus_one_name : <span className="muted-dash">—</span>}
+                            </td>
+                            <td className="message-cell">
+                              {rsvp.message ? (
+                                <button
+                                  type="button"
+                                  className="btn-view-message"
+                                  onClick={() => setSelectedMessage(rsvp)}
+                                  title="Click to view full message"
+                                >
+                                  <MessageSquare size={13} className="cell-icon" />
+                                  <span className="message-text-snippet">{rsvp.message}</span>
+                                  <Eye size={12} className="message-eye-icon" />
+                                </button>
+                              ) : (
+                                <span className="muted-dash">—</span>
+                              )}
+                            </td>
+                            <td className="date-cell">
+                              <span className="date-inline">
+                                <Calendar size={13} className="cell-icon" />
+                                {rsvp.created_at
+                                  ? new Date(rsvp.created_at).toLocaleDateString(undefined, {
+                                      year: 'numeric',
+                                      month: 'short',
+                                      day: 'numeric'
+                                    })
+                                  : 'N/A'}
+                              </span>
+                            </td>
+                            <td className="text-center action-cell">
+                              <button
+                                type="button"
+                                className="btn-delete-rsvp"
+                                title="Delete RSVP entry"
+                                onClick={() => handleDeleteRSVP(rsvp.id, rsvp.full_name)}
+                              >
+                                <Trash2 size={15} />
+                              </button>
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                )}
+              </div>
+            </div>
+          )}
+        </div>
+      </div>
+
+      {/* Guest Full Message Modal */}
+      {selectedMessage && (
+        <div
+          className="admin-msg-modal-overlay"
+          onClick={() => setSelectedMessage(null)}
+          role="dialog"
+          aria-modal="true"
+        >
+          <div
+            className="admin-msg-modal-card glass-card"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="admin-msg-modal-header">
+              <div className="admin-msg-header-left">
+                <MessageSquare size={22} className="admin-msg-icon" />
+                <div>
+                  <h3 className="font-serif admin-msg-guest-name">{selectedMessage.full_name}</h3>
+                  <span className="admin-msg-email">{selectedMessage.email}</span>
                 </div>
-              )}
+              </div>
+              <button
+                type="button"
+                className="admin-modal-close-btn"
+                onClick={() => setSelectedMessage(null)}
+                aria-label="Close Message"
+              >
+                <X size={18} />
+              </button>
+            </div>
+
+            <div className="admin-msg-modal-body">
+              <div className="admin-msg-meta-row">
+                <span className={`status-badge ${selectedMessage.attending ? 'status-attending' : 'status-declined'}`}>
+                  {selectedMessage.attending ? <CheckCircle2 size={13} /> : <XCircle size={13} />}
+                  {selectedMessage.attending ? `Attending (${selectedMessage.guest_count || 1} guest${(selectedMessage.guest_count || 1) > 1 ? 's' : ''})` : 'Declined'}
+                </span>
+
+                {selectedMessage.plus_one_name && (
+                  <span className="admin-msg-plus-one">
+                    <strong>+1 Guest:</strong> {selectedMessage.plus_one_name}
+                  </span>
+                )}
+
+                <span className="admin-msg-date">
+                  <Calendar size={13} className="cell-icon" />
+                  {selectedMessage.created_at
+                    ? new Date(selectedMessage.created_at).toLocaleString(undefined, {
+                        year: 'numeric',
+                        month: 'short',
+                        day: 'numeric',
+                        hour: '2-digit',
+                        minute: '2-digit'
+                      })
+                    : 'N/A'}
+                </span>
+              </div>
+
+              <div className="admin-msg-content-box">
+                <p className="admin-msg-quote-text">{selectedMessage.message}</p>
+              </div>
+            </div>
+
+            <div className="admin-msg-modal-footer">
+              <button
+                type="button"
+                className="btn-admin-secondary"
+                onClick={() => setSelectedMessage(null)}
+              >
+                Close Message
+              </button>
             </div>
           </div>
-        )}
-      </div>
-    </div>
+        </div>
+      )}
+    </>
   );
 }
+

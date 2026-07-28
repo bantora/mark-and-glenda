@@ -2423,6 +2423,9 @@ h1, h2, h3, h4, .font-serif, .font-cursive, .font-heading {
   border: 1px solid var(--border-color);
   border-radius: var(--radius-md);
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 4px 12px rgba(44, 42, 41, 0.03);
 }
 
 .admin-state-container {
@@ -2453,18 +2456,25 @@ h1, h2, h3, h4, .font-serif, .font-cursive, .font-heading {
 
 .table-responsive {
   width: 100%;
+  max-height: 52vh;
   overflow-x: auto;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
 .admin-rsvp-table {
   width: 100%;
-  border-collapse: collapse;
+  border-collapse: separate;
+  border-spacing: 0;
   text-align: left;
   font-size: 0.9rem;
 }
 
 .admin-rsvp-table th {
-  background: rgba(250, 247, 242, 0.8);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: #faf7f2;
   color: var(--text-muted);
   font-weight: 600;
   font-size: 0.78rem;
@@ -2473,10 +2483,11 @@ h1, h2, h3, h4, .font-serif, .font-cursive, .font-heading {
   padding: 1rem 1.25rem;
   border-bottom: 1px solid var(--border-color);
   white-space: nowrap;
+  box-shadow: 0 1px 2px rgba(44, 42, 41, 0.05);
 }
 
 .admin-rsvp-table td {
-  padding: 1rem 1.25rem;
+  padding: 0.9rem 1.25rem;
   border-bottom: 1px solid rgba(212, 163, 152, 0.15);
   color: var(--text-main);
   vertical-align: middle;
@@ -2487,7 +2498,7 @@ h1, h2, h3, h4, .font-serif, .font-cursive, .font-heading {
 }
 
 .admin-rsvp-table tr:hover td {
-  background: rgba(250, 247, 242, 0.4);
+  background: rgba(250, 247, 242, 0.5);
 }
 
 .guest-name-cell {
@@ -2534,10 +2545,49 @@ h1, h2, h3, h4, .font-serif, .font-cursive, .font-heading {
 }
 
 .message-cell {
-  max-width: 260px;
+  max-width: 280px;
+}
+
+.btn-view-message {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.35rem 0.75rem;
+  border-radius: 50px;
+  background: rgba(244, 235, 230, 0.7);
+  color: var(--text-main);
+  border: 1px solid rgba(212, 163, 152, 0.35);
+  font-size: 0.82rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  max-width: 100%;
+}
+
+.btn-view-message:hover {
+  background: var(--accent-blush);
+  color: #ffffff;
+  border-color: var(--accent-blush);
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(212, 163, 152, 0.3);
+}
+
+.btn-view-message:hover .cell-icon,
+.btn-view-message:hover .message-eye-icon {
+  color: #ffffff;
+}
+
+.message-text-snippet {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  max-width: 170px;
+}
+
+.message-eye-icon {
+  color: var(--accent-blush);
+  margin-left: 0.2rem;
+  flex-shrink: 0;
+  opacity: 0.8;
 }
 
 .text-center {
@@ -2547,6 +2597,129 @@ h1, h2, h3, h4, .font-serif, .font-cursive, .font-heading {
 .font-medium {
   font-weight: 500;
 }
+
+/* Guest Message Modal */
+.admin-msg-modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 3000;
+  background: rgba(44, 42, 41, 0.65);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  animation: fadeIn 0.25s ease-out;
+}
+
+.admin-msg-modal-card {
+  max-width: 560px;
+  width: 100%;
+  background: #ffffff;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border-color);
+  box-shadow: 0 20px 50px rgba(44, 42, 41, 0.25);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  animation: modalSlideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.admin-msg-modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.25rem 1.75rem;
+  border-bottom: 1px solid var(--border-color);
+  background: rgba(250, 247, 242, 0.6);
+}
+
+.admin-msg-header-left {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+}
+
+.admin-msg-icon {
+  color: var(--accent-blush);
+  background: var(--accent-blush-light);
+  padding: 0.4rem;
+  box-sizing: content-box;
+  border-radius: 50%;
+}
+
+.admin-msg-guest-name {
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: var(--text-main);
+  line-height: 1.2;
+}
+
+.admin-msg-email {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+.admin-msg-modal-body {
+  padding: 1.5rem 1.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  max-height: 60vh;
+  overflow-y: auto;
+}
+
+.admin-msg-meta-row {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  font-size: 0.85rem;
+}
+
+.admin-msg-plus-one {
+  background: var(--bg-cream);
+  padding: 0.25rem 0.75rem;
+  border-radius: 50px;
+  color: var(--text-main);
+  border: 1px solid var(--border-color);
+}
+
+.admin-msg-date {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  color: var(--text-muted);
+  margin-left: auto;
+}
+
+.admin-msg-content-box {
+  background: var(--bg-cream);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 1.25rem 1.5rem;
+  position: relative;
+}
+
+.admin-msg-quote-text {
+  font-family: var(--font-sans);
+  font-size: 0.98rem;
+  line-height: 1.65;
+  color: var(--text-main);
+  white-space: pre-wrap;
+  word-break: break-word;
+  margin: 0;
+}
+
+.admin-msg-modal-footer {
+  padding: 1rem 1.75rem;
+  border-top: 1px solid var(--border-color);
+  background: rgba(250, 247, 242, 0.4);
+  display: flex;
+  justify-content: flex-end;
+}
+
 
 /* Lightbox Modal */
 .lightbox-modal-overlay {
