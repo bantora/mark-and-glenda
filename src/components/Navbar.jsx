@@ -18,6 +18,7 @@ export default function Navbar({ onOpenRSVP }) {
   }, []);
 
   const navLinks = [
+    { name: 'Entourage', href: '#entourage' },
     { name: 'Schedule', href: '#schedule' },
     { name: 'Details', href: '#details' },
     { name: 'Gifts', href: '#gifts' },
